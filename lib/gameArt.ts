@@ -42,12 +42,17 @@ export function gameArtSettingKey(slot: string) {
 
 /** Map of slot key → admin-uploaded URL, for slots that have an override. */
 export async function getGameArtOverrides(): Promise<Record<string, string>> {
-  const rows = await prisma.setting.findMany({
-    where: { key: { startsWith: "gameart:" } },
-  });
-  const map: Record<string, string> = {};
-  for (const row of rows) {
-    map[row.key.slice("gameart:".length)] = row.value;
+  try {
+    const rows = await prisma.setting.findMany({
+      where: { key: { startsWith: "gameart:" } },
+    });
+    const map: Record<string, string> = {};
+    for (const row of rows) {
+      map[row.key.slice("gameart:".length)] = row.value;
+    }
+    return map;
+  } catch (err) {
+    // Return empty overrides if DB is inaccessible at build time
+    return {};
   }
-  return map;
 }
