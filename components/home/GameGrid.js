@@ -366,7 +366,7 @@ function HomeGameSection({ catKey, label, games, onComingSoon }) {
           const isSoon = COMING_SOON_GAMES[game.slug];
           const cardBody = (
             <>
-              <div className="club-popular-card-media" style={{ width: "100%", aspectRatio: "3/4", position: "relative", borderRadius: "14px", overflow: "hidden", border: "1px solid var(--theme-border)", boxShadow: "0 4px 10px rgba(0, 0, 0, 0.05)" }}>
+              <div className="club-popular-card-media" style={{ width: "100%", aspectRatio: "3/4", position: "relative", borderRadius: "14px", overflow: "hidden", border: "none", boxShadow: "0 4px 12px rgba(71, 129, 255, 0.15)", background: "var(--theme-primary)" }}>
                 {(game.badge || isSoon) && (
                   <span className={`club-game-badge ${isSoon ? 'soon' : game.badge?.toLowerCase() === 'hot' ? 'hot' : 'new'}`}>
                     {isSoon ? "Soon" : game.badge}
@@ -377,7 +377,7 @@ function HomeGameSection({ catKey, label, games, onComingSoon }) {
                     src={GAME_BANNER_MAP[game.slug]}
                     alt={game.label}
                     className="club-popular-card-img"
-                    style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", borderRadius: "14px" }}
+                    style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", border: "none" }}
                   />
                 ) : (
                   <div className="club-popular-card-art" style={{ display: "flex", width: "100%", height: "100%", alignItems: "center", justifyContent: "center" }}>
