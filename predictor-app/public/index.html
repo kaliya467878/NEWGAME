@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nova Predictor - Premium Color Prediction Suite</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+  <!-- Dynamic Starfield Background -->
+  <div class="stars-container"></div>
+  
+  <!-- Main Application Wrapper -->
+  <div class="app-container">
+    
+    <!-- Header / Brand logo -->
+    <header class="app-header">
+      <div class="logo">
+        <span class="logo-accent">NOVA</span>PREDICTOR
+      </div>
+      <div id="nav-actions" class="hidden">
+        <button id="btn-admin-nav" class="btn btn-secondary btn-sm" onclick="navigateTo('/admin')">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+          Admin Portal
+        </button>
+        <button id="btn-logout" class="btn btn-danger btn-sm" onclick="logout()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Disconnect
+        </button>
+      </div>
+    </header>
+
+    <!-- Unified Card (Switches content using pages helper) -->
+    <main class="glass-card">
+
+      <!-- ================= LOGIN SCREEN ================= -->
+      <section id="page-login" class="card-page active">
+        <div class="hero-section">
+          <h2>Predict the Future</h2>
+          <p>Gain access to our high-fidelity, deterministic round analyzers. Please authenticate with your secure access key.</p>
+        </div>
+        <form id="form-login" onsubmit="handleLogin(event)">
+          <div class="form-group">
+            <label for="login-key">Secure Access Key</label>
+            <div class="input-icon-wrapper">
+              <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <input type="text" id="login-key" placeholder="NOVA-XXXX-XXXX" required autocomplete="off" style="text-transform: uppercase;">
+            </div>
+          </div>
+          <button type="submit" id="btn-login-submit" class="btn btn-primary btn-block">
+            Authenticate Device
+          </button>
+        </form>
+        <div class="login-footer">
+          <p>Need access? Contact your administrator to request a predictor token.</p>
+          <a href="#" onclick="navigateTo('/admin'); return false;" class="text-link">Access Admin Dashboard</a>
+        </div>
+      </section>
+
+      <!-- ================= PREDICTOR DASHBOARD ================= -->
+      <section id="page-predictor" class="card-page">
+        <div class="dashboard-header">
+          <div>
+            <h3>Welcome, <span id="user-display-name" class="text-gold">Analyzer User</span></h3>
+            <p class="text-muted text-sm">Key connected: <span id="user-display-key">NOVA-XXXX</span></p>
+          </div>
+        </div>
+
+        <div class="predictor-controls">
+          <form id="form-predict" onsubmit="handlePredict(event)">
+            <div class="form-group">
+              <label for="predict-number">Round / Period Number</label>
+              <div class="input-group">
+                <input type="text" id="predict-number" placeholder="Enter last round number (e.g. 20260724001)" required pattern="[0-9]+" title="Please enter numbers only">
+                <button type="submit" class="btn btn-primary">
+                  Analyze Result
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- Scanning State / Loading Screen -->
+        <div id="scanning-container" class="hidden">
+          <div class="radar-scanner">
+            <div class="radar-line"></div>
+            <div class="radar-dots">
+              <div class="radar-dot dot-1"></div>
+              <div class="radar-dot dot-2"></div>
+              <div class="radar-dot dot-3"></div>
+            </div>
+            <div class="radar-core"></div>
+          </div>
+          <div class="scanner-text">
+            <h4 class="pulse-text">SCANNING ENVIRONMENT</h4>
+            <p id="scanner-status">Initializing algorithmic arrays...</p>
+          </div>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="result-container" class="hidden">
+          <div class="prediction-outcome-wrapper">
+            <div class="card-title-sm">PREDICTED OUTCOME</div>
+            
+            <div class="outcome-grid">
+              
+              <!-- Color Prediction Card -->
+              <div class="outcome-card" id="outcome-card-color">
+                <div class="outcome-label">Next Color</div>
+                <div class="outcome-value" id="pred-color">RED</div>
+                <div class="outcome-sub" id="pred-color-chips">
+                  <span class="chip chip-red">Red</span>
+                </div>
+              </div>
+
+              <!-- Size Prediction Card -->
+              <div class="outcome-card">
+                <div class="outcome-label">Next Size</div>
+                <div class="outcome-value" id="pred-size">BIG</div>
+                <div class="outcome-sub">Based on value threshold</div>
+              </div>
+
+              <!-- Number Prediction Card -->
+              <div class="outcome-card">
+                <div class="outcome-label">Next Number</div>
+                <div class="number-ball" id="pred-number">8</div>
+                <div class="outcome-sub">High likelihood digit</div>
+              </div>
+
+              <!-- Confidence Level Meter -->
+              <div class="outcome-card flex-center">
+                <div class="outcome-label">Confidence</div>
+                <div class="circular-progress">
+                  <svg class="progress-svg" viewBox="0 0 100 100">
+                    <circle class="progress-bg" cx="50" cy="50" r="40"></circle>
+                    <circle class="progress-bar" cx="50" cy="50" r="40" stroke-dasharray="251.2" stroke-dashoffset="50"></circle>
+                  </svg>
+                  <span class="progress-text" id="pred-confidence">92%</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Prediction History -->
+        <div class="history-section">
+          <h4>Recent Analyses</h4>
+          <div class="table-wrapper">
+            <table class="table" id="history-table">
+              <thead>
+                <tr>
+                  <th>Period</th>
+                  <th>Color Outcome</th>
+                  <th>Size</th>
+                  <th>Number</th>
+                  <th>Confidence</th>
+                </tr>
+              </thead>
+              <tbody id="history-rows">
+                <tr id="no-history-row">
+                  <td colspan="5" class="text-center text-muted">No rounds analyzed yet in this session.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= ADMIN GATEKEEPER ================= -->
+      <section id="page-admin-login" class="card-page">
+        <div class="hero-section">
+          <h2>Admin Gatekeeper</h2>
+          <p>Please provide the master administrator password to unlock access key generation and status utilities.</p>
+        </div>
+        <form id="form-admin-login" onsubmit="handleAdminLogin(event)">
+          <div class="form-group">
+            <label for="admin-password">Master Password</label>
+            <div class="input-icon-wrapper">
+              <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <input type="password" id="admin-password" placeholder="Enter password" required>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">
+            Unlock Dashboard
+          </button>
+        </form>
+        <div class="login-footer">
+          <a href="#" onclick="navigateTo('/'); return false;" class="text-link">Back to Predictor Login</a>
+        </div>
+      </section>
+
+      <!-- ================= ADMIN DASHBOARD ================= -->
+      <section id="page-admin" class="card-page">
+        <div class="dashboard-header">
+          <div>
+            <h3>Key Management Portal</h3>
+            <p class="text-muted text-sm">Create and control predictor user credentials</p>
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="navigateTo('/')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            Predictor Tool
+          </button>
+        </div>
+
+        <!-- Create Key Form -->
+        <div class="admin-create-wrapper">
+          <form id="form-create-key" onsubmit="handleCreateKey(event)">
+            <h4>Issue New Predictor Key</h4>
+            <div class="input-group">
+              <input type="text" id="key-description" placeholder="User Name / Purpose (e.g. Player John)" required>
+              <button type="submit" class="btn btn-primary">
+                Generate Secure Key
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Keys List Table -->
+        <div class="keys-list-section">
+          <h4>Active Credentials</h4>
+          <div class="table-wrapper">
+            <table class="table" id="keys-table">
+              <thead>
+                <tr>
+                  <th>Access Key</th>
+                  <th>Assignee</th>
+                  <th>Status</th>
+                  <th>Issued Date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="keys-rows">
+                <tr>
+                  <td colspan="5" class="text-center text-muted">Loading access keys from vault...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>&copy; 2026 Nova Analytics Labs. Standalone environment. Strictly for authorized testers.</p>
+    </footer>
+
+  </div>
+
+  <!-- Notification Toast Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Client-side Logic Script -->
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/settle-rounds",
+      "schedule": "* * * * *"
+    },
+    {
+      "path": "/api/cron/sunpays-poll",
+      "schedule": "* * * * *"
+    },
+    {
+      "path": "/api/cron/referral-bet-commission",
+      "schedule": "30 18 * * *"
+    }
+  ]
+}

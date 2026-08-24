@@ -1,0 +1,465 @@
+# Get Payout Status
+
+Live status from the gateway. Returns cached value if already in a final state.
+
+```
+GET /api/public/v1/payouts/status/{payout_transaction_id}
+```
+
+| Header | Value |
+|---|---|
+| x-api-key | Your Payout API Key |
+
+## Response
+
+```json
+{
+  "payout": {
+    "id": "po_xxxxxxxxxxxx",
+    "status": "success",
+    "amount": 500,
+    "currency": "INR",
+    "method": "bank",
+    "created_at": "2026-06-01T10:00:00.000Z",
+    "processed_at": "2026-06-01T10:00:42.000Z",
+    "failure_reason": null
+  },
+  "refreshed": true
+}
+```
+
+# Payout Webhook
+
+When a payout reaches a final state, Sunpays POSTs to your `notify_url`.
+
+| Field | Type | Description |
+|---|---|---|
+| event | string | `payout.success` \| `payout.failed` |
+| payout_id | string | Your original `payout_id` |
+| transaction_id | string | Sunpays payout id |
+| amount | number | Payout amount |
+| currency | string | `INR` |
+| method | string | `bank` / `upi` / `usdt` |
+| status | string | `success` \| `failed` |
+| failure_reason | string | When failed |
+| processed_at | string | ISO timestamp |
+| signature | string | HMAC-SHA256(raw_body, payout_api_secret) — VERIFY! |
+| metadata | object | What you sent on create |
+
+Respond with HTTP **200** and plain body `ok`. Failed responses are retried up to 5 times.
+
+
+# Create Payout
+
+Disburse funds to a beneficiary (bank / UPI / USDT).
+
+> **Required:** Your server IP must be whitelisted in the merchant panel.
+> **Rate limit:** 1 payout request per 60 seconds.
+
+## Endpoint
+```
+POST /api/public/v1/payouts
+```
+
+## Headers
+
+| Header | Value |
+|---|---|
+| Content-Type | `application/json` |
+| x-api-key | Your **Payout API Key** |
+| x-signature | HMAC-SHA256(body, payout_api_secret) hex |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| payout_id | string | Yes | Unique merchant payout id |
+| amount | number | Yes | Net amount to send to beneficiary |
+| currency | string | Yes | `INR` |
+| method | string | Yes | `bank` \| `upi` \| `usdt` |
+| beneficiary_name | string | Yes | Beneficiary full name |
+| beneficiary_account | string | Yes | Bank A/C no, UPI VPA, or USDT address |
+| beneficiary_phone | string | No | Beneficiary phone |
+| beneficiary_email | string | No | Beneficiary email |
+| ifsc | string | Bank | IFSC code — REQUIRED for `method: "bank"` |
+| bank_name | string | No | Bank name |
+| notify_url | string | No | Per-order webhook |
+| notify_url_2 | string | No | Optional second webhook |
+| metadata | object | No | Any JSON returned in callback |
+
+> **Fee model:** Fee is charged **on top** of `amount`. The wallet is debited `amount + fee`; the beneficiary receives exactly `amount`.
+
+## Example Request
+
+```json
+POST /api/public/v1/payouts
+x-api-key: YOUR_PAYOUT_API_KEY
+x-signature: <hmac_sha256_hex_of_body>
+Content-Type: application/json
+
+{
+  "payout_id": "PAYOUT-001",
+  "amount": 500,
+  "currency": "INR",
+  "method": "bank",
+  "beneficiary_name": "Ramesh Kumar",
+  "beneficiary_account": "1234567890",
+  "beneficiary_phone": "9876543210",
+  "ifsc": "HDFC0001234",
+  "bank_name": "HDFC Bank",
+  "notify_url": "https://yoursite.com/webhook/payout"
+}
+```
+
+### UPI example
+```json
+{
+  "payout_id": "PAYOUT-002",
+  "amount": 200,
+  "currency": "INR",
+  "method": "upi",
+  "beneficiary_name": "Sita Devi",
+  "beneficiary_account": "sita@okhdfcbank"
+}
+```
+
+### USDT example
+```json
+{
+  "payout_id": "PAYOUT-003",
+  "amount": 50,
+  "currency": "INR",
+  "method": "usdt",
+  "beneficiary_name": "Wallet User",
+  "beneficiary_account": "TXxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  "metadata": { "network": "TRC20" }
+}
+```
+
+## Example Response — 201 Created
+
+```json
+{
+  "idempotent": false,
+  "payout": {
+    "id": "po_xxxxxxxxxxxx",
+    "status": "processing",
+    "amount": 500,
+    "currency": "INR",
+    "method": "bank",
+    "created_at": "2026-06-01T10:00:00.000Z"
+  }
+}
+```
+
+## Error Responses
+
+| HTTP | error | When |
+|---|---|---|
+| 401 | `missing_api_key` / `invalid_api_key` / `invalid_signature` | Auth failed |
+| 403 | `ip_not_configured` | Payout whitelist empty |
+| 403 | `ip_not_whitelisted` | Caller IP not allowed |
+| 403 | `payout_disabled` | Payout disabled for merchant |
+| 400 | `missing_fields` / `missing_acct_code` | Required field / IFSC missing |
+| 400 | `invalid_amount` | Amount not positive |
+| 402 | `insufficient_balance` | Wallet balance < amount+fee |
+| 429 | `rate_limited` | More than 1 payout / 60 sec |
+| 502 | `gateway_error` | Upstream gateway rejected the order |
+
+
+# Pay-In Webhook
+
+When a pay-in reaches a final state (`success` / `failed` / `expired`), Sunpays POSTs to your `notify_url` (or merchant default callback URL).
+
+## Request
+
+`POST <your_notify_url>` with `Content-Type: application/json`
+
+| Field | Type | Description |
+|---|---|---|
+| event | string | `payin.success` \| `payin.failed` \| `payin.expired` |
+| order_id | string | Your original `order_id` |
+| transaction_id | string | Sunpays transaction id |
+| amount | number | Order amount |
+| currency | string | `INR` |
+| method | string | Payment method used |
+| status | string | `success` \| `failed` \| `expired` |
+| paid_at | string | ISO timestamp (when success) |
+| signature | string | HMAC-SHA256(raw_body, payin_api_secret) — verify before trusting! |
+| metadata | object | Whatever you sent on create |
+
+## Expected Response
+Return HTTP **200** with plain body `ok` (or any 2xx).
+Non-2xx responses are retried with exponential backoff (up to 5 times).
+
+
+# Pay-In Webhook
+
+When a pay-in reaches a final state (`success` / `failed` / `expired`), Sunpays POSTs to your `notify_url` (or merchant default callback URL).
+
+## Request
+
+`POST <your_notify_url>` with `Content-Type: application/json`
+
+| Field | Type | Description |
+|---|---|---|
+| event | string | `payin.success` \| `payin.failed` \| `payin.expired` |
+| order_id | string | Your original `order_id` |
+| transaction_id | string | Sunpays transaction id |
+| amount | number | Order amount |
+| currency | string | `INR` |
+| method | string | Payment method used |
+| status | string | `success` \| `failed` \| `expired` |
+| paid_at | string | ISO timestamp (when success) |
+| signature | string | HMAC-SHA256(raw_body, payin_api_secret) — verify before trusting! |
+| metadata | object | Whatever you sent on create |
+
+## Expected Response
+Return HTTP **200** with plain body `ok` (or any 2xx).
+Non-2xx responses are retried with exponential backoff (up to 5 times).
+
+
+# Create Pay-In Order
+
+Create a new pay-in (collection) order. Redirect customer to the returned `checkout_url`.
+
+## Endpoint
+```
+POST /api/public/v1/payins
+```
+
+## Headers
+
+| Header | Value |
+|---|---|
+| Content-Type | `application/json` |
+| x-api-key | Your **Pay-In API Key** |
+| x-signature | HMAC-SHA256(body, payin_api_secret) hex |
+
+## Request Body
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| order_id | string | Yes | Unique merchant order id |
+| amount | number | Yes | Amount (positive number, e.g. 100 or 99.50) |
+| currency | string | Yes | `INR` |
+| method | string | Yes | `upi` \| `bank` \| `usdt` |
+| customer_name | string | No | Customer full name |
+| customer_phone | string | No | Customer phone |
+| customer_email | string | No | Customer email |
+| notify_url | string | No | Per-order server-to-server webhook (overrides merchant default) |
+| notify_url_2 | string | No | Optional second webhook |
+| metadata | object | No | Any JSON, returned back in the callback |
+
+## Example Request
+
+```json
+POST /api/public/v1/payins
+x-api-key: YOUR_PAYIN_API_KEY
+x-signature: <hmac_sha256_hex_of_body>
+Content-Type: application/json
+
+{
+  "order_id": "ORDER-001",
+  "amount": 100,
+  "currency": "INR",
+  "method": "upi",
+  "customer_name": "John Doe",
+  "customer_phone": "9876543210",
+  "customer_email": "john@example.com",
+  "notify_url": "https://yoursite.com/webhook/payin",
+  "metadata": { "ref": "anything" }
+}
+```
+
+## Example Response — 201 Created
+
+```json
+{
+  "idempotent": false,
+  "transaction": {
+    "id": "txn_xxxxxxxxxxxx",
+    "status": "pending",
+    "amount": 100,
+    "currency": "INR",
+    "method": "upi",
+    "created_at": "2026-06-01T10:00:00.000Z",
+    "gateway_payment_url": "https://cashier.sunpaytm.site/checkout/txn_xxxxxxxxxxxx"
+  },
+  "checkout_url": "https://cashier.sunpaytm.site/checkout/txn_xxxxxxxxxxxx",
+  "payment_url":  "https://cashier.sunpaytm.site/checkout/txn_xxxxxxxxxxxx",
+  "redirect_url": "https://cashier.sunpaytm.site/checkout/txn_xxxxxxxxxxxx",
+  "merchant_gateway_payment_url": "https://cashier.sunpaytm.site/checkout/txn_xxxxxxxxxxxx"
+}
+```
+
+### Idempotency
+Sending the same `order_id` again returns the existing transaction with `"idempotent": true` (unless the previous one is `failed`/`expired`, in which case it is retried in-place).
+
+## Error Responses
+
+| HTTP | error | When |
+|---|---|---|
+| 401 | `missing_api_key` | Header not sent |
+| 401 | `invalid_api_key` | Unknown key |
+| 401 | `invalid_signature` | HMAC mismatch |
+| 403 | `merchant_inactive` | Merchant not active |
+| 403 | `payin_disabled` | Pay-in disabled — contact support |
+| 400 | `missing_fields` | Required field missing |
+| 400 | `invalid_amount` | Amount not a positive number |
+| 400 | `invalid_notify_url` | notify_url failed validation |
+| 400 | `invalid_json` | Body is not valid JSON |
+
+
+# Balance Query
+
+Returns your merchant wallet balance.
+
+```
+GET /api/public/v1/balance?currency=INR
+```
+
+| Header | Value |
+|---|---|
+| x-api-key | Your Payout API Key |
+
+## Response
+
+```json
+{
+  "status": "success",
+  "success": true,
+  "currency": "INR",
+  "merchant_id": "uuid-...",
+  "balance": 1000.00,
+  "available": 1000.00,
+  "frozen": 0,
+  "available_balance": 1000.00,
+  "gateway": {
+    "provider": "sunpay",
+    "available": 950.00,
+    "frozen": 50.00,
+    "error": null
+  }
+}
+```
+
+The `gateway` block is best-effort; if the upstream is unreachable, `available` and `frozen` will be `null` and `error` will be set — your local `balance` is always returned.
+
+
+# Signing Examples
+
+## Node.js
+```js
+const crypto = require('crypto');
+const body = JSON.stringify(payload);   // EXACT bytes you will send
+const sig  = crypto.createHmac('sha256', API_SECRET)
+                   .update(body).digest('hex');
+
+await fetch('https://cashier.sunpaytm.site/api/public/v1/payins', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'x-api-key': API_KEY,
+    'x-signature': sig,
+  },
+  body,
+});
+```
+
+## PHP (Laravel / Guzzle)
+```php
+$body = json_encode($payload, JSON_UNESCAPED_SLASHES);
+$sig  = hash_hmac('sha256', $body, $apiSecret);
+
+$resp = Http::withHeaders([
+    'Content-Type' => 'application/json',
+    'x-api-key'    => $apiKey,
+    'x-signature'  => $sig,
+])->withBody($body, 'application/json')
+  ->post('https://cashier.sunpaytm.site/api/public/v1/payins');
+```
+
+## Python
+```python
+import hmac, hashlib, json, requests
+body = json.dumps(payload, separators=(',', ':'))
+sig  = hmac.new(API_SECRET.encode(), body.encode(), hashlib.sha256).hexdigest()
+
+r = requests.post(
+    'https://cashier.sunpaytm.site/api/public/v1/payins',
+    headers={'Content-Type':'application/json','x-api-key':API_KEY,'x-signature':sig},
+    data=body,
+)
+```
+
+## Verifying Webhooks
+Recompute the signature over the **raw incoming request body** using the SAME secret and compare with the `signature` field (or `x-signature` header).
+
+
+
+# Sunpays API Documentation
+
+Welcome to **Sunpays** payment gateway API.
+
+- **Base URL:** `https://cashier.sunpaytm.site`
+- **Auth:** `x-api-key` header (merchant key). Pay-In & Payout also require `x-signature` header.
+- **Country / Currency:** India / **INR**
+- **Methods:** `upi`, `bank`, `usdt`
+
+---
+
+## Signature (x-signature)
+
+Pay-In and Payout requests MUST be signed using **HMAC-SHA256** of the **raw JSON body** with your API secret:
+
+```
+x-signature = HMAC_SHA256( raw_request_body, api_secret ).hex().lowercase()
+```
+
+Example (Node.js):
+```js
+const crypto = require('crypto');
+const body = JSON.stringify(payload);
+const sig  = crypto.createHmac('sha256', API_SECRET).update(body).digest('hex');
+```
+
+Example (PHP):
+```php
+$body = json_encode($payload, JSON_UNESCAPED_SLASHES);
+$sig  = hash_hmac('sha256', $body, $apiSecret);
+```
+
+> **Important:** Sign the EXACT raw body bytes you send. Re-serialising on the server side will break the signature.
+
+---
+
+## IP Whitelist (Payouts only)
+
+Payout API calls require your server IP(s) to be **whitelisted** in your merchant panel. Pay-in does NOT need a whitelist.
+
+Configure from: **Merchant Panel → Info → Payout IP Whitelist** (supports single IPs and CIDR like `203.0.113.0/24`).
+
+---
+
+## Rate Limit
+
+- Payout: 1 request per 60 seconds per merchant (returns HTTP 429).
+- Pay-in: no rate limit; duplicate `order_id` is idempotent.
+
+---
+
+## HTTP Status Codes
+
+| Code | Meaning |
+|---|---|
+| 200 | OK |
+| 201 | Created (new pay-in / payout) |
+| 400 | Validation error |
+| 401 | Missing / invalid api key or signature |
+| 402 | Insufficient balance |
+| 403 | Merchant inactive, IP not allowed, or feature disabled |
+| 404 | Not found |
+| 429 | Rate limited |
+| 500 | Server error |
+| 502 | Upstream gateway error |

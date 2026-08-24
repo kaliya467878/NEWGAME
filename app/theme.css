@@ -1,0 +1,106 @@
+:root {
+  /* BACKGROUNDS: Strictly White and Off-White */
+  --theme-bg: #F7F8FA;
+  --theme-bg-soft: #FFFFFF;
+  --theme-bg-elevated: #FFFFFF;
+  --theme-bg-card: #FFFFFF;
+  --theme-bg-muted: #F2F3F5;
+  --theme-bg-input: #F7F8FA;
+  --theme-bg-overlay: rgba(0, 0, 0, 0.05);
+  --theme-bg-nav: #FFFFFF;
+  --theme-bg-pill: #F2F3F5;
+  --theme-btn-muted: #EBEDF0;
+
+  /* TEXT: Strictly Dark Grey */
+  --theme-text: #323233;
+  --theme-text-secondary: #646566;
+  --theme-text-muted: #969799;
+  --theme-text-dim: #C8C9CC;
+  --theme-text-inverse: #FFFFFF;
+
+  /* MAIN COLOR: GoaGame Blue */
+  --theme-primary: #4781FF;
+  --theme-secondary: #E3E9FF;
+  
+  /* OVERRIDE EVERY OTHER ACCENT TO MAIN OR SECONDARY */
+  --theme-green: #10B981;
+  --theme-green-light: var(--theme-primary);
+  --theme-green-dark: var(--theme-primary);
+  --theme-green-deep: var(--theme-primary);
+  --theme-green-glow: rgba(71, 129, 255, 0.1);
+  --theme-green-border: rgba(71, 129, 255, 0.2);
+  --theme-green-soft-bg: var(--theme-secondary);
+
+  --theme-gold: var(--theme-primary);
+  --theme-gold-bright: var(--theme-primary);
+  --theme-gold-muted: var(--theme-primary);
+  --theme-gold-glow: rgba(71, 129, 255, 0.1);
+
+  --theme-violet: #8B5CF6;
+  --theme-violet-light: var(--theme-primary);
+  --theme-orange: var(--theme-primary);
+  --theme-orange-light: var(--theme-primary);
+  --theme-blue: var(--theme-primary);
+  --theme-blue-light: var(--theme-primary);
+  --theme-badge-hot: var(--theme-primary);
+
+  /* BORDERS */
+  --theme-border: #EBEDF0;
+  --theme-border-muted: #F2F3F5;
+  --theme-border-strong: #DCDEE0;
+  --theme-border-gold: rgba(71, 129, 255, 0.2);
+  --theme-border-green: rgba(71, 129, 255, 0.2);
+
+  /* STATUS - Also tied to primary/secondary to keep it strictly 2-color for now */
+  --theme-danger: #EF4444;
+  --theme-danger-dark: var(--theme-primary);
+  --theme-danger-bg: var(--theme-secondary);
+  --theme-danger-border: var(--theme-primary);
+  --theme-danger-text: var(--theme-primary);
+  --theme-warning: var(--theme-primary);
+  --theme-warning-bg: var(--theme-secondary);
+  --theme-success: var(--theme-primary);
+  --theme-info: var(--theme-primary);
+
+  /* SHADOWS: Soft Grey, no colored shadows */
+  --theme-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --theme-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --theme-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --theme-shadow-green: 0 4px 14px rgba(0, 0, 0, 0.08);
+  --theme-shadow-gold: 0 4px 14px rgba(0, 0, 0, 0.08);
+
+  /* LEGACY VARS */
+  --theme-gradient-gold-text: var(--theme-primary);
+  --theme-gradient-green: var(--theme-primary);
+  --theme-gradient-green-h: var(--theme-primary);
+  --theme-gradient-green-soft: var(--theme-secondary);
+  --theme-gradient-green-badge: var(--theme-primary);
+  --theme-app-glow: transparent;
+  --theme-gradient-card: var(--theme-bg-card);
+  --theme-gradient-modal-header: var(--theme-bg-elevated);
+  --theme-gradient-banner: var(--theme-bg-card);
+
+  --color-bg: var(--theme-bg);
+  --color-surface: var(--theme-bg-card);
+  --color-primary: var(--theme-primary);
+  --color-primary-light: var(--theme-primary);
+  --color-accent: var(--theme-primary);
+  --color-text: var(--theme-text);
+  --color-text-muted: var(--theme-text-muted);
+  --color-border: var(--theme-border);
+  
+  --gradient-primary: var(--theme-primary);
+  --gradient-cta: var(--theme-primary);
+
+  /* PREMIUM UI HELPERS */
+  --theme-glass-bg: #FFFFFF;
+  --theme-glass-bg-soft: var(--theme-border);
+  --theme-glass-border: #EBEDF0;
+  --theme-glass-border-strong: #DCDEE0;
+  --theme-glass-blur: 0px;
+  --theme-gold-glow-strong: transparent;
+  --theme-gold-metal: var(--theme-primary);
+  --theme-gold-soft-metal: var(--theme-primary);
+  --theme-dark-glow: none;
+  --theme-card-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}

@@ -1,0 +1,136 @@
+.fdt-container {
+  background: var(--theme-bg-elevated); /* Dark blue background */
+  border-radius: 8px;
+  padding: 10px;
+  color: white;
+  font-size: 12px;
+  width: 100%;
+}
+
+.fdt-tabs {
+  display: flex;
+  background: var(--theme-bg-card);
+  border-radius: 4px;
+  margin-bottom: 10px;
+  padding: 4px;
+}
+
+.fdt-tab {
+  flex: 1;
+  background: transparent;
+  color: #8C96A8;
+  border: none;
+  padding: 8px 0;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+
+.fdt-tab.active {
+  background: #F05E60;
+  color: white;
+}
+
+.fdt-chart-wrapper {
+  position: relative;
+  background: var(--theme-bg-elevated);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.fdt-header, .fdt-row, .fdt-stats-row {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--theme-border);
+}
+
+.fdt-period-col {
+  width: 60px;
+  padding: 8px 4px;
+  text-align: center;
+  color: #8C96A8;
+  font-weight: 600;
+  border-right: 1px solid var(--theme-border);
+}
+
+.fdt-period-val {
+  width: 60px;
+  padding: 8px 4px;
+  text-align: center;
+  color: var(--theme-text);
+  border-right: 1px solid var(--theme-border);
+}
+
+.fdt-numbers-col, .fdt-numbers-row {
+  display: flex;
+  flex: 1;
+}
+
+.fdt-num-header, .fdt-cell {
+  flex: 1;
+  text-align: center;
+  padding: 6px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  min-height: 28px;
+}
+
+.fdt-num-header {
+  color: #8C96A8;
+  font-weight: 600;
+}
+
+.fdt-cell {
+  border-right: 1px solid var(--theme-border);
+}
+.fdt-cell:last-child {
+  border-right: none;
+}
+
+.fdt-hit-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #F05E60; /* Red circle */
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 11px;
+  z-index: 2; /* above svg */
+  position: relative;
+}
+
+.fdt-miss-val {
+  color: #4A5568; /* Faded missing value, if we want to show it */
+}
+
+/* SVG Line Overlay */
+.fdt-svg-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1; /* Below hit circles */
+}
+
+/* Stats Section */
+.fdt-stats {
+  background: var(--theme-bg-card);
+}
+
+.fdt-stats-label {
+  width: 60px;
+  padding: 8px 4px;
+  text-align: center;
+  color: #8C96A8;
+  font-size: 10px;
+  border-right: 1px solid var(--theme-border);
+  word-wrap: break-word;
+}

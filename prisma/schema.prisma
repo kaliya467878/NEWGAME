@@ -1,0 +1,752 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+generator client_default {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  USER
+  STAFF
+  SUPER_ADMIN
+}
+
+enum LedgerType {
+  WELCOME_BONUS
+  DEPOSIT_APPROVED
+  DEPOSIT_BONUS
+  WITHDRAW_APPROVED
+  WITHDRAW_REJECTED_REFUND
+  WITHDRAW_REQUESTED
+  BET_PLACED
+  BET_WON
+  BET_LOST
+  ADMIN_ADJUST
+  REWARD_CLAIMED
+  GIFT_CODE_REDEEMED
+}
+
+enum RequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum WingoMode {
+  S30
+  M1
+  M3
+  M5
+}
+
+enum WingoBetType {
+  NUMBER
+  COLOR
+  BIG_SMALL
+}
+
+enum WingoBetStatus {
+  PENDING
+  WON
+  LOST
+}
+
+enum ResultSource {
+  RANDOM
+  SCHEDULED
+  MANUAL
+}
+
+enum K3Mode {
+  S30
+  M1
+  M3
+  M5
+  M10
+}
+
+enum K3BetType {
+  SUM_VALUE
+  SUM_BIG_SMALL
+  SUM_ODD_EVEN
+  ANY_TRIPLE
+  TWO_SAME_SPECIFIC
+  TWO_SAME_UNIQUE
+  THREE_SAME_SPECIFIC
+  THREE_DIFFERENT
+  TWO_DIFFERENT
+  THREE_CONTINUOUS
+}
+
+enum K3BetStatus {
+  PENDING
+  WON
+  LOST
+}
+
+enum FiveDMode {
+  S30
+  M1
+  M3
+  M5
+  M10
+}
+
+enum FiveDBetType {
+  POSITION_NUMBER
+  SUM_BIG_SMALL
+  SUM_ODD_EVEN
+}
+
+enum FiveDBetStatus {
+  PENDING
+  WON
+  LOST
+}
+
+enum ResultMode {
+  RANDOM
+  SCHEDULED
+}
+
+enum RewardType {
+  DAILY
+  REFERRAL
+  ACHIEVEMENT
+  EVENT
+}
+
+enum RewardStatus {
+  AVAILABLE
+  CLAIMED
+}
+
+enum NotificationType {
+  DEPOSIT_APPROVED
+  WITHDRAW_APPROVED
+  GIFT_CODE_REDEEMED
+  REWARD_AVAILABLE
+  ANNOUNCEMENT
+}
+
+enum CmsType {
+  HOMEPAGE_BANNER
+  POPUP
+  ANNOUNCEMENT
+  PROMOTIONAL_CARD
+}
+
+enum ContentStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum DepositChannelKind {
+  CHANNEL
+  METHOD
+}
+
+enum AgentType {
+  MASTER_AGENT
+  SUB_AGENT
+  REFERRAL_AGENT
+  DIRECT_AFFILIATE
+}
+
+enum AgentStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+}
+
+enum DiceDirection {
+  OVER
+  UNDER
+}
+
+enum GameStatus {
+  ACTIVE
+  CASHED_OUT
+  LOST
+}
+
+model User {
+  id             String    @id @default(uuid())
+  uid            Int       @unique @default(autoincrement())
+  phone          String    @unique
+  passwordHash   String
+  email          String?   @unique
+  country        String    @default("IN")
+  displayName    String
+  avatarSeed     String
+  referralCode   String    @unique
+  referredById   String?
+  referredBy     User?     @relation("Referrals", fields: [referredById], references: [id])
+  referrals      User[]    @relation("Referrals")
+  role           Role      @default(USER)
+  isGuest        Boolean   @default(false)
+  isPartner      Boolean   @default(false)
+  requiredWager  Int       @default(0)
+  status         UserStatus @default(ACTIVE)
+  holdWithdrawals Boolean    @default(false)
+  bypassRechargeCheck Boolean @default(false)
+  adminNote      String?
+  dailyWithdrawLimit Int      @default(3)
+  maxWithdrawLimit   Int      @default(50000)
+  createdAt      DateTime  @default(now())
+  lastLoginAt    DateTime?
+  lastLoginIp    String?
+
+  wallet                Wallet?
+  depositRequests       DepositRequest[]  @relation("DepositRequester")
+  withdrawRequests      WithdrawRequest[] @relation("WithdrawRequester")
+  reviewedDeposits      DepositRequest[]  @relation("DepositReviewer")
+  reviewedWithdraws     WithdrawRequest[] @relation("WithdrawReviewer")
+  wingoBets             WingoBet[]
+  k3Bets                K3Bet[]
+  fiveDBets             FiveDBet[]
+  k3OverridesMade       K3ResultOverride[]    @relation("K3Overrides")
+  fiveDOverridesMade    FiveDResultOverride[] @relation("FiveDOverrides")
+  resultOverridesMade   ResultOverride[]
+  pregeneratedResults   PregeneratedResult[]
+  passwordResetRequests PasswordResetRequest[]
+  auditLogs             AuditLog[]
+  rewards               Reward[]
+  notifications         Notification[]
+  giftCodesCreated      GiftCode[]
+  giftCodeRedemptions   GiftCodeRedemption[]
+  cmsContentsCreated    CmsContent[]
+  cmsVersionsEdited     CmsVersion[]
+  staffPermissions      StaffPermission[]  @relation("StaffPermissionHolder")
+  grantedPermissions    StaffPermission[]  @relation("StaffPermissionGranter")
+  diceBets              DiceBet[]
+  limboBets             LimboBet[]
+  wheelSpins            WheelSpin[]
+  minesGames            MinesGame[]
+  crashGames            CrashGame[]
+  agentsCreated         Agent[]      @relation("AgentCreator")
+  agentProfile          Agent?       @relation("AgentLinkedUser")
+  withdrawalAccounts    WithdrawalAccount[]
+}
+
+model StaffPermission {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation("StaffPermissionHolder", fields: [userId], references: [id])
+  key         String
+  grantedById String
+  grantedBy   User     @relation("StaffPermissionGranter", fields: [grantedById], references: [id])
+  createdAt   DateTime @default(now())
+
+  @@unique([userId, key])
+}
+
+model ActivityFeed {
+  id        String   @id @default(uuid())
+  type      String
+  message   String
+  actorId   String?
+  meta      Json?
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([type])
+}
+
+model DiceBet {
+  id         String        @id @default(uuid())
+  userId     String
+  user       User          @relation(fields: [userId], references: [id])
+  amount     Int
+  target     Int
+  direction  DiceDirection
+  roll       Int
+  multiplier Float
+  payout     Int
+  won        Boolean
+  createdAt  DateTime      @default(now())
+
+  @@index([userId, createdAt])
+}
+
+model LimboBet {
+  id               String   @id @default(uuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id])
+  amount           Int
+  targetMultiplier Float
+  crashPoint       Float
+  payout           Int
+  won              Boolean
+  createdAt        DateTime @default(now())
+
+  @@index([userId, createdAt])
+}
+
+model WheelSpin {
+  id           String   @id @default(uuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  amount       Int
+  segmentIndex Int
+  multiplier   Float
+  payout       Int
+  createdAt    DateTime @default(now())
+
+  @@index([userId, createdAt])
+}
+
+model MinesGame {
+  id            String     @id @default(uuid())
+  userId        String
+  user          User       @relation(fields: [userId], references: [id])
+  amount        Int
+  mineCount     Int
+  minePositions Int[]
+  revealed      Int[]
+  status        GameStatus @default(ACTIVE)
+  multiplier    Float      @default(1)
+  payout        Int        @default(0)
+  createdAt     DateTime   @default(now())
+  endedAt       DateTime?
+
+  @@index([userId, status])
+}
+
+model CrashGame {
+  id               String     @id @default(uuid())
+  userId           String
+  user             User       @relation(fields: [userId], references: [id])
+  amount           Int
+  crashPoint       Float
+  cashOutMultiplier Float?
+  status           GameStatus @default(ACTIVE)
+  payout           Int        @default(0)
+  createdAt        DateTime   @default(now())
+  endedAt          DateTime?
+
+  @@index([userId, status])
+}
+
+model Wallet {
+  id        String   @id @default(uuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+  balance   Int      @default(0)
+  updatedAt DateTime @updatedAt
+
+  ledgerEntries LedgerEntry[]
+}
+
+model LedgerEntry {
+  id           String     @id @default(uuid())
+  walletId     String
+  wallet       Wallet     @relation(fields: [walletId], references: [id])
+  type         LedgerType
+  amount       Int
+  balanceAfter Int
+  meta         Json?
+  createdAt    DateTime   @default(now())
+
+  @@index([walletId, createdAt])
+}
+
+model DepositRequest {
+  id           String        @id @default(uuid())
+  userId       String
+  user         User          @relation("DepositRequester", fields: [userId], references: [id])
+  amount       Int
+  status       RequestStatus @default(PENDING)
+  isMock       Boolean       @default(false)
+  note         String?
+  reviewedById String?
+  reviewedBy   User?         @relation("DepositReviewer", fields: [reviewedById], references: [id])
+  reviewedAt   DateTime?
+  createdAt    DateTime      @default(now())
+
+  providerId   String?
+  txid         String?
+  screenshot   String?
+  channelKey   String?
+
+  @@index([status, createdAt])
+}
+
+model WithdrawRequest {
+  id           String        @id @default(uuid())
+  userId       String
+  user         User          @relation("WithdrawRequester", fields: [userId], references: [id])
+  amount       Int
+  status       RequestStatus @default(PENDING)
+  isMock       Boolean       @default(false)
+  note         String?
+  reviewedById String?
+  reviewedBy   User?         @relation("WithdrawReviewer", fields: [reviewedById], references: [id])
+  reviewedAt   DateTime?
+  createdAt    DateTime      @default(now())
+
+  @@index([status, createdAt])
+}
+
+model WingoBet {
+  id          String         @id @default(uuid())
+  userId      String
+  user        User           @relation(fields: [userId], references: [id])
+  mode        WingoMode
+  roundNumber BigInt
+  betType     WingoBetType
+  selection   String
+  amount      Int
+  status      WingoBetStatus @default(PENDING)
+  payout      Int            @default(0)
+  createdAt   DateTime       @default(now())
+
+  @@index([mode, roundNumber])
+  @@index([userId, createdAt])
+}
+
+model WingoResult {
+  id          String       @id @default(uuid())
+  mode        WingoMode
+  roundNumber BigInt
+  number      Int
+  color       String
+  size        String
+  source      ResultSource
+  settledAt   DateTime     @default(now())
+
+  @@unique([mode, roundNumber])
+}
+
+model ResultOverride {
+  id          String    @id @default(uuid())
+  mode        WingoMode
+  roundNumber BigInt
+  number      Int
+  createdById String
+  createdBy   User      @relation(fields: [createdById], references: [id])
+  createdAt   DateTime  @default(now())
+
+  @@index([mode, roundNumber])
+}
+
+model PregeneratedResult {
+  id          String    @id @default(uuid())
+  mode        WingoMode
+  roundNumber BigInt
+  number      Int
+  createdById String
+  createdBy   User      @relation(fields: [createdById], references: [id])
+  createdAt   DateTime  @default(now())
+
+  @@unique([mode, roundNumber])
+}
+
+model K3Bet {
+  id          String      @id @default(uuid())
+  userId      String
+  user        User        @relation(fields: [userId], references: [id])
+  mode        K3Mode
+  roundNumber BigInt
+  betType     K3BetType
+  selection   String
+  amount      Int
+  status      K3BetStatus @default(PENDING)
+  payout      Int         @default(0)
+  createdAt   DateTime    @default(now())
+
+  @@index([mode, roundNumber])
+  @@index([userId, createdAt])
+}
+
+model K3Result {
+  id          String       @id @default(uuid())
+  mode        K3Mode
+  roundNumber BigInt
+  dice1       Int
+  dice2       Int
+  dice3       Int
+  sum         Int
+  source      ResultSource
+  settledAt   DateTime     @default(now())
+
+  @@unique([mode, roundNumber])
+}
+
+model FiveDBet {
+  id          String         @id @default(uuid())
+  userId      String
+  user        User           @relation(fields: [userId], references: [id])
+  mode        FiveDMode
+  roundNumber BigInt
+  betType     FiveDBetType
+  selection   String
+  amount      Int
+  status      FiveDBetStatus @default(PENDING)
+  payout      Int            @default(0)
+  createdAt   DateTime       @default(now())
+
+  @@index([mode, roundNumber])
+  @@index([userId, createdAt])
+}
+
+model K3ResultOverride {
+  id          String   @id @default(uuid())
+  mode        K3Mode
+  roundNumber BigInt
+  dice1       Int
+  dice2       Int
+  dice3       Int
+  createdById String
+  createdBy   User     @relation("K3Overrides", fields: [createdById], references: [id])
+  createdAt   DateTime @default(now())
+
+  @@index([mode, roundNumber])
+}
+
+model FiveDResultOverride {
+  id          String   @id @default(uuid())
+  mode        FiveDMode
+  roundNumber BigInt
+  a           Int
+  b           Int
+  c           Int
+  d           Int
+  e           Int
+  createdById String
+  createdBy   User     @relation("FiveDOverrides", fields: [createdById], references: [id])
+  createdAt   DateTime @default(now())
+
+  @@index([mode, roundNumber])
+}
+
+model FiveDResult {
+  id          String       @id @default(uuid())
+  mode        FiveDMode
+  roundNumber BigInt
+  a           Int
+  b           Int
+  c           Int
+  d           Int
+  e           Int
+  sum         Int
+  source      ResultSource
+  settledAt   DateTime     @default(now())
+
+  @@unique([mode, roundNumber])
+}
+
+model Setting {
+  key   String @id
+  value String
+}
+
+model PasswordResetRequest {
+  id          String    @id @default(uuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  email       String
+  otpHash     String
+  ip          String?
+  requestedAt DateTime  @default(now())
+  consumedAt  DateTime?
+
+  @@index([userId, requestedAt])
+}
+
+model AuditLog {
+  id         String   @id @default(uuid())
+  actorId    String
+  actor      User     @relation(fields: [actorId], references: [id])
+  action     String
+  targetType String
+  targetId   String?
+  meta       Json?
+  createdAt  DateTime @default(now())
+
+  @@index([createdAt])
+}
+
+model Reward {
+  id        String       @id @default(uuid())
+  userId    String
+  user      User         @relation(fields: [userId], references: [id])
+  type      RewardType
+  key       String
+  amount    Int
+  status    RewardStatus @default(AVAILABLE)
+  meta      Json?
+  claimedAt DateTime?
+  createdAt DateTime     @default(now())
+
+  @@unique([userId, key])
+  @@index([userId, status])
+}
+
+model GiftCode {
+  id             String    @id @default(uuid())
+  code           String    @unique
+  amount         Int
+  maxRedemptions Int       @default(1)
+  perUserLimit   Int       @default(1)
+  redeemedCount  Int       @default(0)
+  isActive       Boolean   @default(true)
+  expiresAt      DateTime?
+  createdById    String
+  createdBy      User      @relation(fields: [createdById], references: [id])
+  createdAt      DateTime  @default(now())
+
+  redemptions GiftCodeRedemption[]
+}
+
+model GiftCodeRedemption {
+  id         String   @id @default(uuid())
+  giftCodeId String
+  giftCode   GiftCode @relation(fields: [giftCodeId], references: [id])
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  amount     Int
+  createdAt  DateTime @default(now())
+
+  @@unique([giftCodeId, userId])
+}
+
+model Notification {
+  id        String           @id @default(uuid())
+  userId    String
+  user      User             @relation(fields: [userId], references: [id])
+  type      NotificationType
+  title     String
+  body      String
+  meta      Json?
+  read      Boolean          @default(false)
+  createdAt DateTime         @default(now())
+
+  @@index([userId, read, createdAt])
+}
+
+model CmsContent {
+  id          String        @id @default(uuid())
+  type        CmsType
+  title       String
+  body        String?
+  imageUrl    String?
+  linkUrl     String?
+  badge       String?
+  highlight   String?
+  emoji       String?
+  status      ContentStatus @default(DRAFT)
+  sortOrder   Int           @default(0)
+  startAt     DateTime?
+  endAt       DateTime?
+  publishedAt DateTime?
+  version     Int           @default(1)
+  createdById String
+  createdBy   User          @relation(fields: [createdById], references: [id])
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  versions CmsVersion[]
+
+  @@index([type, status])
+}
+
+model CmsVersion {
+  id         String        @id @default(uuid())
+  contentId  String
+  content    CmsContent    @relation(fields: [contentId], references: [id])
+  version    Int
+  status     ContentStatus
+  snapshot   Json
+  editedById String
+  editedBy   User          @relation(fields: [editedById], references: [id])
+  createdAt  DateTime      @default(now())
+
+  @@unique([contentId, version])
+}
+
+model DepositChannel {
+  id              String             @id @default(uuid())
+  kind            DepositChannelKind
+  channelKey      String
+  iconKey         String?
+  label           String
+  detail          String?
+  channelType     String
+  minAmount       Int
+  maxAmount       Int
+  bonusBadge      String?
+  networkLabel    String?
+  active          Boolean            @default(true)
+  disabledMessage String?
+  sortOrder       Int                @default(0)
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+
+  @@index([kind, active])
+}
+
+model Agent {
+  id            String      @id @default(uuid())
+  name          String
+  mobile        String
+  inviteCode    String      @unique
+  type          AgentType
+  parentId      String?
+  parent        Agent?      @relation("AgentHierarchy", fields: [parentId], references: [id])
+  children      Agent[]     @relation("AgentHierarchy")
+  commissionPct Float
+  status        AgentStatus @default(ACTIVE)
+  notes         String?
+  linkedUserId  String?     @unique
+  linkedUser    User?       @relation("AgentLinkedUser", fields: [linkedUserId], references: [id])
+  createdById   String
+  createdBy     User        @relation("AgentCreator", fields: [createdById], references: [id])
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@index([type, status])
+  @@index([parentId])
+}
+
+model WithdrawalAccount {
+  id             String   @id @default(uuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id])
+  type           String   // "bank", "upi", "usdt"
+  label          String   @default("")
+  bankName       String?
+  bankCardNumber String?
+  bankCardHolder String?
+  ifsc           String?
+  upiId          String?
+  cryptoAddress  String?
+  cryptoNetwork  String?
+  isPreferred    Boolean  @default(false)
+  createdAt      DateTime @default(now())
+
+  @@index([userId])
+}
+
+model PredictorKey {
+  id          String   @id @default(uuid())
+  key         String   @unique
+  description String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([key, isActive])
+}
+

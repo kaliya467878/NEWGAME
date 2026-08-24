@@ -1,0 +1,450 @@
+@import "../k3/dice3d.css";
+
+/* =========================================
+   5D LOTTERY — responsive shell
+   Mobile: full-width column. Desktop: the mobile column is centered
+   inside a framed "device" so the wide screen doesn't feel empty/broken.
+   ========================================= */
+
+.fived-layout {
+  min-height: 100dvh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background:
+    radial-gradient(1100px 600px at 50% -10%, rgba(71, 129, 255, 0.2), transparent 60%),
+    #060606;
+}
+
+/* the inner page column set by the page component (max-w-[480px]) */
+.fived-layout > div {
+  width: 100%;
+}
+
+@media (min-width: 900px) {
+  .fived-layout {
+    align-items: flex-start;
+    padding: 0;
+  }
+
+  /* full-height column on desktop without floating/framing margins */
+  .fived-layout > div {
+    border-left: 1px solid var(--theme-border);
+    border-right: 1px solid var(--theme-border);
+    box-shadow: 0 0 60px rgba(0, 0, 0, 0.05);
+    min-height: 100dvh;
+  }
+}
+
+/* =========================================
+   5D — REAL 3D DICE STAGE
+   ========================================= */
+.k5-dice-stage {
+  position: relative;
+  height: 100px;
+  background: var(--theme-bg-card);
+  border: 1px solid var(--theme-green); /* gold border */
+  border-radius: 18px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 0 12px;
+  perspective: 1000px;
+}
+
+.k5-dice-slots-container {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  width: 82%;
+  height: 85%;
+}
+
+.k5-dice-slot {
+  background: var(--theme-bg-card);
+  border-radius: 12px;
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--theme-border);
+}
+
+.k5-dice-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #d4af37; /* gold */
+  width: 20px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  cursor: pointer;
+}
+.k5-dice-arrow.left {
+  left: -1px;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+.k5-dice-arrow.left::after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 7px solid var(--theme-text); /* points right */
+}
+.k5-dice-arrow.right {
+  right: -1px;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+.k5-dice-arrow.right::after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-right: 7px solid var(--theme-text); /* points left */
+}
+
+/* Override face to display centered digits instead of grid pips */
+.k5d-face {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  padding: 0 !important;
+}
+
+/* smaller responsive dice size for 5D (since there are 5 of them) */
+.k5-dice-stage .k3d-scene {
+  --die: 44px;
+  --half: 22px;
+  width: var(--die);
+  height: var(--die);
+}
+.k5-dice-stage .k3d-face {
+  border-radius: 10px;
+}
+@media (min-width: 375px) {
+  .k5-dice-stage .k3d-scene {
+    --die: 48px;
+    --half: 24px;
+  }
+}
+@media (min-width: 420px) {
+  .k5-dice-stage .k3d-scene {
+    --die: 52px;
+    --half: 26px;
+  }
+}
+
+/* =========================================
+   5D CYLINDRICAL SLOT DRUM REELS
+   ========================================= */
+:root {
+  --reel-item-height: 54px;
+}
+
+.k5-reel-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.k5-reel-overlay-top,
+.k5-reel-overlay-bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 18px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.k5-reel-overlay-top {
+  top: 0;
+  background: linear-gradient(to bottom, rgba(13, 13, 13, 0.95), transparent);
+}
+
+.k5-reel-overlay-bottom {
+  bottom: 0;
+  background: linear-gradient(to top, rgba(13, 13, 13, 0.95), transparent);
+}
+
+.k5-reel-strip {
+  position: absolute;
+  top: 50%;
+  margin-top: calc(-0.5 * var(--reel-item-height));
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.6s cubic-bezier(0.25, 1.2, 0.5, 1);
+  will-change: transform;
+}
+
+.k5-reel-strip--rolling {
+  animation: k5-spin-reel 0.22s linear infinite;
+}
+
+.k5-reel-item {
+  height: var(--reel-item-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.k5-reel-circle {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--theme-text);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.k5-reel-circle--active {
+  background: var(--theme-green);
+  color: var(--theme-text);
+  box-shadow: 0 0 14px rgba(71, 129, 255, 0.2);
+  border: 1px solid var(--theme-border);
+  transform: scale(1.05);
+}
+
+.k5-reel-circle--inactive {
+  background: var(--theme-border);
+  border: 1px solid var(--theme-border);
+  color: #a1a1aa;
+}
+
+@keyframes k5-spin-reel {
+  0% {
+    transform: translateY(calc(-10 * var(--reel-item-height)));
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* =========================================
+   5D REDESIGN — WINGO TICKET & BLACK+GOLD
+   ========================================= */
+
+.wg-ticket {
+  display: flex;
+  margin: 0 0 1rem 0;
+  background:
+    radial-gradient(circle at 10% 20%, var(--theme-border), transparent 45%),
+    var(--theme-primary);
+  border-radius: 16px;
+  border: 1px solid var(--theme-border);
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 15px 35px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 var(--theme-border),
+    0 0 20px rgba(71, 129, 255, 0.2);
+}
+
+.wg-ticket::before,
+.wg-ticket::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  background: var(--theme-bg-card);
+  border-radius: 50%;
+  transform: translateY(-50%);
+  border: 1px solid var(--theme-border);
+  z-index: 5;
+}
+
+.wg-ticket::before { left: -7px; box-shadow: inset -3px 0 5px rgba(0, 0, 0, 0.05); }
+.wg-ticket::after { right: -7px; box-shadow: inset 3px 0 5px rgba(0, 0, 0, 0.05); }
+
+.wg-ticket-left {
+  flex: 1.2;
+  padding: 0.875rem 0.75rem;
+  border-right: 1px dashed rgba(71, 129, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.wg-ticket-right {
+  flex: 0.8;
+  padding: 0.875rem 0.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.wg-how-play {
+  align-self: flex-start;
+  background: rgba(71, 129, 255, 0.2);
+  border: 1px solid var(--theme-border);
+  border-radius: 999px;
+  color: #fcd974;
+  font-size: 0.625rem;
+  font-weight: 700;
+  padding: 0.25rem 0.625rem;
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+  box-shadow: inset 0 1px 0 var(--theme-border);
+  transition: all .2s ease;
+}
+
+.wg-how-play:hover {
+  background: rgba(71, 129, 255, 0.2);
+  border-color: rgba(71, 129, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.wg-mode-label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #fcd974;
+  margin-bottom: 0.5rem;
+}
+
+.wg-recent-row {
+  display: flex;
+  gap: 0.3125rem;
+}
+
+.wg-mini-ball {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6875rem;
+  font-weight: 800;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(circle at 30% 20%, #FFFDF2 0%, #d4af37 50%, #84620A 100%);
+  border: 1px solid var(--theme-border);
+  color: var(--theme-text);
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.05),
+    inset 0 2px 4px var(--theme-border),
+    inset 0 -4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.wg-mini-ball::before { display: none; }
+
+.wg-time-label {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #a1a1aa;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.wg-timer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  margin: 0.375rem 0;
+}
+
+.wg-timer span {
+  background: var(--theme-bg-card);
+  padding: 0.375rem 0.5rem;
+  border-radius: 8px;
+  font-size: 1.15rem;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  min-width: 32px;
+  border: 1px solid var(--theme-border);
+  color: var(--theme-text);
+  box-shadow:
+    0 8px 16px rgba(0, 0, 0, 0.05),
+    inset 0 1px 1px var(--theme-border);
+}
+
+.wg-timer em {
+  font-style: normal;
+  color: rgba(71, 129, 255, 0.2);
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.wg-period-id {
+  font-size: 0.625rem;
+  color: #71717a;
+  font-weight: 700;
+  font-family: monospace;
+  word-break: break-all;
+  line-height: 1.2;
+}
+
+.wg-countdown-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  padding: 0.5rem;
+  background: rgba(8, 8, 8, 0.65);
+  backdrop-filter: blur(8px);
+  pointer-events: all;
+  border-radius: 16px;
+  border: 1px solid var(--theme-border);
+}
+
+.wg-countdown-digit {
+  width: 60px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 30% 20%, var(--theme-border), transparent 60%),
+    var(--theme-primary);
+  border: 1px solid var(--theme-green);
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 var(--theme-border);
+  font-size: 3rem;
+  font-weight: 900;
+  line-height: 1;
+  color: #fcd974;
+  font-variant-numeric: tabular-nums;
+  animation: wg-countdown-pulse 1s ease-in-out infinite;
+}
+
+.wg-countdown-digit:last-child {
+  animation-delay: 0.15s;
+}
+
+@keyframes wg-countdown-pulse {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05)); }
+  50% { transform: scale(1.05); filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05)); }
+}

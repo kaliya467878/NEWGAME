@@ -1,0 +1,29 @@
+app\dice\dice.css:893: border: 1.5px solid #065f46;
+app\dice\dice.css:899: border: 1.5px solid #075985;
+app\dice\dice.css:921: border: 1.5px solid #233b80;
+app\dice\dice.css:977: border: 1.5px solid #30363d;
+app\dice\dice.css:1023: border: 1.5px solid #30363d;
+app\dice\dice.css:1058: border: 1px solid #21262d;
+app\dice\dice.css:1084: border: 1px solid #30363d;
+app\fived\fived.css:101: border-left: 7px solid #0d0d0d; /* points right */
+app\fived\fived.css:114: border-right: 7px solid #0d0d0d; /* points left */
+app\globals.css:7: --border: #222222;
+app\globals.css:311: border: 1px solid #166534;
+app\globals.css:417: .result-ball.violet-red { background: linear-gradient(135deg, #450a0a, #4c1d95); color: var(--theme-text); }
+app\globals.css:419: .number-btn.violet-red { background: linear-gradient(135deg, #450a0a, #4c1d95); color: var(--theme-text); }
+app\globals.css:501: border-bottom: 1px solid #334155;
+app\globals.css:613: border-bottom: 1px solid #334155;
+app\globals.css:648: border-bottom: 1px solid #334155;
+app\k3\k3.css:564: border-left: 8px solid #0d0d0d; /* points right */
+app\k3\k3.css:577: border-right: 8px solid #0d0d0d; /* points left */
+app\k3\k3.css:606: border-color: #00ad68;
+app\k3\k3.css:743: border: 2px solid #064e3b;
+app\wingo\wingo.css:530: background: radial-gradient(circle at 35% 25%, #c4b5fd 0%, #7c3aed 65%, #4c1d95 100%);
+app\wingo\wingo.css:894: .wg-chart-ball.v0 { background: radial-gradient(circle at 30% 25%, #c4b5fd 0%, #7c3aed 50%, #3b0764 100%); }
+app\wingo\wingo.css:895: .wg-chart-ball.v5 { background: radial-gradient(circle at 30% 25%, #c4b5fd 0%, #7c3aed 50%, #3b0764 100%); }
+app\wingo\wingo.css:989: background: radial-gradient(circle at 35% 25%, #c4b5fd 0%, #7c3aed 65%, #4c1d95 100%) !important;
+components\fived\FiveDTrendChart.css:45: border-bottom: 1px solid #2B3244;
+components\fived\FiveDTrendChart.css:54: border-right: 1px solid #2B3244;
+components\fived\FiveDTrendChart.css:62: border-right: 1px solid #2B3244;
+components\fived\FiveDTrendChart.css:87: border-right: 1px solid #2B3244;
+components\fived\FiveDTrendChart.css:134: border-right: 1px solid #2B3244;
