@@ -23,7 +23,7 @@
   --theme-secondary: #E3E9FF;
   
   /* OVERRIDE EVERY OTHER ACCENT TO MAIN OR SECONDARY */
-  --theme-green: #10B981;
+  --theme-green: var(--theme-primary);
   --theme-green-light: var(--theme-primary);
   --theme-green-dark: var(--theme-primary);
   --theme-green-deep: var(--theme-primary);
@@ -36,7 +36,7 @@
   --theme-gold-muted: var(--theme-primary);
   --theme-gold-glow: rgba(71, 129, 255, 0.1);
 
-  --theme-violet: #8B5CF6;
+  --theme-violet: var(--theme-primary);
   --theme-violet-light: var(--theme-primary);
   --theme-orange: var(--theme-primary);
   --theme-orange-light: var(--theme-primary);
@@ -52,7 +52,7 @@
   --theme-border-green: rgba(71, 129, 255, 0.2);
 
   /* STATUS - Also tied to primary/secondary to keep it strictly 2-color for now */
-  --theme-danger: #EF4444;
+  --theme-danger: var(--theme-primary);
   --theme-danger-dark: var(--theme-primary);
   --theme-danger-bg: var(--theme-secondary);
   --theme-danger-border: var(--theme-primary);

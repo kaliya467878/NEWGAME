@@ -523,9 +523,7 @@
   transform: scale(.97);
 }
 
-.wg-color-btn.green {
-  background: var(--theme-primary);
-}
+.wg-color-btn.green { background: #10B981 !important; }
 .wg-color-btn.violet {
   background: #8B5CF6;
 }
@@ -1060,9 +1058,9 @@
   transform: translateY(-1px);
 }
 
-.wg-bet-sheet.theme-green .wg-bet-chip.active { background: var(--theme-bg-elevated); border-color: 1px solid var(--theme-border); color: var(--theme-text); box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3); }
-.wg-bet-sheet.theme-violet .wg-bet-chip.active { background: #8b5cf6; border-color: #8b5cf6; color: var(--theme-text); box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3); }
-.wg-bet-sheet.theme-red .wg-bet-chip.active { background: #ef4444; border-color: #ef4444; color: var(--theme-text); box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3); }
+.wg-bet-sheet.theme-green .wg-bet-chip.active { background: #10B981; border-color: #10B981; color: #fff; }
+.wg-bet-sheet.theme-violet .wg-bet-chip.active { background: #8B5CF6; border-color: #8B5CF6; color: #fff; }
+.wg-bet-sheet.theme-red .wg-bet-chip.active { background: #EF4444; border-color: #EF4444; color: #fff; }
 .wg-bet-sheet.theme-orange .wg-bet-chip.active { background: #ea580c; border-color: #ea580c; color: var(--theme-text); box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3); }
 .wg-bet-sheet.theme-blue .wg-bet-chip.active { background: var(--theme-gold-metal); border-color: var(--theme-green); color: var(--theme-text); box-shadow: 0 4px 12px rgba(71, 129, 255, 0.2); }
 .wg-bet-sheet.theme-v0 .wg-bet-chip.active,

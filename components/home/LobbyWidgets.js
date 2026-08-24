@@ -262,7 +262,7 @@ export default function LobbyWidgets() {
           font-size: 12px;
         }
         .amount-text {
-          color: #10b981;
+          color: var(--theme-primary);
           font-weight: 700;
         }
 
@@ -416,7 +416,7 @@ export default function LobbyWidgets() {
         }
         .list-amount {
           font-size: 12px;
-          color: #10b981;
+          color: var(--theme-primary);
           font-weight: 700;
         }
       `}</style>
