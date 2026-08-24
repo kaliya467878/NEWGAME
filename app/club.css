@@ -11,6 +11,7 @@
 
 
 .club-app {
+    padding-bottom: 90px !important;
   background: var(--theme-bg);
   color: var(--theme-text);
   min-height: 100vh;

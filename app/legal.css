@@ -294,7 +294,7 @@
   gap: 10px;
   font-size: 12px;
   line-height: 1.6;
-  color: var(--theme-border);
+  color: var(--theme-text-muted);
   text-align: left;
 }
 .bullet-diamond {

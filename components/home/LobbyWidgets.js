@@ -167,10 +167,10 @@ export default function LobbyWidgets() {
         }
         .widget-section {
           background: var(--theme-bg-card);
-          border: 1px solid rgba(255, 255, 255, 0.05);
+          border: 1px solid var(--theme-border);
           border-radius: 20px;
           padding: 1.25rem 1rem;
-          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
           backdrop-filter: blur(8px);
         }
         .widget-header {
@@ -178,7 +178,7 @@ export default function LobbyWidgets() {
           align-items: center;
           gap: 8px;
           margin-bottom: 1.25rem;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+          border-bottom: 1px solid var(--theme-border);
           padding-bottom: 8px;
         }
         .widget-header-icon {
@@ -202,11 +202,11 @@ export default function LobbyWidgets() {
           display: flex;
           font-size: 11px;
           font-weight: 600;
-          color: rgba(255, 255, 255, 0.4);
+          color: var(--theme-text);
           text-transform: uppercase;
           letter-spacing: 0.5px;
           padding-bottom: 8px;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+          border-bottom: 1px solid var(--theme-border);
         }
         .col-game { flex: 1.2; display: flex; align-items: center; gap: 8px; text-align: left; }
         .col-user { flex: 1.5; display: flex; align-items: center; gap: 8px; text-align: left; }
@@ -222,7 +222,7 @@ export default function LobbyWidgets() {
           display: flex;
           align-items: center;
           padding: 10px 0;
-          border-bottom: 1px dashed rgba(255, 255, 255, 0.03);
+          border-bottom: 1px dashed var(--theme-border);
           font-size: 12px;
           height: 38px;
           box-sizing: border-box;
@@ -252,10 +252,10 @@ export default function LobbyWidgets() {
           height: 20px;
           border-radius: 50%;
           object-fit: cover;
-          border: 1px solid rgba(255, 255, 255, 0.1);
+          border: 1px solid var(--theme-border);
         }
         .user-name {
-          color: rgba(255, 255, 255, 0.8);
+          color: var(--theme-text);
           font-weight: 500;
         }
         .coin-icon {
@@ -302,7 +302,7 @@ export default function LobbyWidgets() {
           height: 44px;
           border-radius: 50%;
           object-fit: cover;
-          border: 2px solid;
+          border: 2px solid var(--theme-border);
         }
         .place-1 .podium-avatar { border-color: #d4af37; width: 52px; height: 52px; }
         .place-2 .podium-avatar { border-color: #60a5fa; }
@@ -322,13 +322,13 @@ export default function LobbyWidgets() {
           align-items: center;
           justify-content: center;
         }
-        .badge-1 { background: #d4af37; color: #111; }
-        .badge-2 { background: #60a5fa; color: var(--theme-text); }
-        .badge-3 { background: #f472b6; color: var(--theme-text); }
+        .badge-1 { background: #d4af37; color: #fff; }
+        .badge-2 { background: #60a5fa; color: #fff; }
+        .badge-3 { background: #f472b6; color: #fff; }
 
         .podium-username {
           font-size: 10px;
-          color: rgba(255, 255, 255, 0.7);
+          color: var(--theme-text);
           margin-bottom: 6px;
           font-weight: 500;
         }
@@ -365,9 +365,9 @@ export default function LobbyWidgets() {
           font-weight: 800;
         }
         .text-gold { color: #d4af37; }
-        .text-gold-light { color: #ffeaa0; }
-        .text-blue-light { color: #93c5fd; }
-        .text-pink-light { color: #fbcfe8; }
+        .text-gold-light { color: #854d0e; }
+        .text-blue-light { color: #1e3a8a; }
+        .text-pink-light { color: #831843; }
 
         .podium-prize {
           font-size: 10px;
@@ -386,8 +386,8 @@ export default function LobbyWidgets() {
           align-items: center;
           justify-content: space-between;
           padding: 8px 12px;
-          background: rgba(255, 255, 255, 0.02);
-          border: 1px solid rgba(255, 255, 255, 0.03);
+          background: var(--theme-bg-elevated);
+          border: 1px solid var(--theme-border);
           border-radius: 10px;
           box-sizing: border-box;
         }
@@ -399,7 +399,7 @@ export default function LobbyWidgets() {
         .rank-num {
           font-size: 11px;
           font-weight: 700;
-          color: rgba(255, 255, 255, 0.4);
+          color: var(--theme-text);
           width: 14px;
         }
         .list-avatar {
@@ -407,11 +407,11 @@ export default function LobbyWidgets() {
           height: 22px;
           border-radius: 50%;
           object-fit: cover;
-          border: 1px solid rgba(255, 255, 255, 0.05);
+          border: 1px solid var(--theme-border);
         }
         .list-username {
           font-size: 12px;
-          color: rgba(255, 255, 255, 0.8);
+          color: var(--theme-text);
           font-weight: 500;
         }
         .list-amount {
