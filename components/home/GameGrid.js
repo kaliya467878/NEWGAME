@@ -258,9 +258,9 @@ function PopularGameCard({ game, onComingSoon }) {
       <GameCardArt game={game} />
     </div>
 
-    <div className="club-popular-card-info">
-      <strong>{game.label}</strong>
-      <span>{game.category}</span>
+    <div className="club-popular-card-info" style={{ textAlign: "left", padding: "10px 4px", background: "transparent" }}>
+      <span style={{ display: "block", color: "var(--theme-text-secondary, #64748B)", fontSize: "11px", fontWeight: "500", textTransform: "capitalize", marginBottom: "4px" }}>{game.category}</span>
+      <strong style={{ display: "block", margin: 0, fontSize: "14px", fontWeight: "800", color: "var(--theme-text)", lineHeight: 1.2 }}>{game.label}</strong>
     </div>
   </>
 );
@@ -386,9 +386,9 @@ function HomeGameSection({ catKey, label, games, onComingSoon }) {
                 )}
               </div>
 
-              <div style={{ textAlign: "center", marginTop: "8px", padding: "0 2px" }}>
-                <span style={{ display: "block", color: "var(--theme-text)", fontSize: "11px", fontWeight: "700", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{game.label}</span>
-                <span style={{ display: "block", color: "var(--theme-green)", fontSize: "9px", fontWeight: "600", textTransform: "uppercase", marginTop: "2px" }}>{getCategoryLabel(game.category)}</span>
+              <div style={{ textAlign: "left", marginTop: "10px", padding: "0 4px" }}>
+                <span style={{ display: "block", color: "var(--theme-text-secondary, #64748B)", fontSize: "11px", fontWeight: "500", textTransform: "capitalize", marginBottom: "4px" }}>{getCategoryLabel(game.category)}</span>
+                <span style={{ display: "block", color: "var(--theme-text, #0F172A)", fontSize: "14px", fontWeight: "800", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{game.label}</span>
               </div>
             </>
           );
