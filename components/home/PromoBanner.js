@@ -14,6 +14,12 @@ export default function PromoBanner() {
       .then((res) => res.json())
       .then((resData) => {
         if (activeFetch && resData?.success && Array.isArray(resData?.data?.carousel)) {
+          // FORCE OVERRIDE DB DATA
+          const defaultImages = ["/design/banners/wingo-payout.png", "/design/banners/first-deposit-bonus.png", "/design/banners/login-bonus.png"];
+          resData.data.carousel = resData.data.carousel.map((b, index) => ({
+            ...b,
+            image: defaultImages[index % defaultImages.length]
+          }));
           setSlides(resData.data.carousel);
         }
       })
