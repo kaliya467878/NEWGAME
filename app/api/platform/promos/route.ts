@@ -15,10 +15,11 @@ export async function GET(_req: NextRequest) {
       },
     });
 
-    const carousel = banners.map((b) => ({
+    const defaultImages = ["/design/banners/wingo-payout.png", "/design/banners/first-deposit-bonus.png", "/design/banners/login-bonus.png"];
+    const carousel = banners.map((b, index) => ({
       id: b.id,
       title: b.title,
-      image: b.imageUrl || "/design/banners/wingo-payout.png",
+      image: defaultImages[index % defaultImages.length],
       link: b.linkUrl || "#",
     }));
 
