@@ -52,7 +52,7 @@ export default function BottomNav() {
             <span className="goa-promo-go">GO</span>
           </div>
         </Link>
-        <span className="goa-promo-text">Get ?500</span>
+        <span className="goa-promo-text">Promotion</span>
       </div>
 
       {SIDE_NAV.slice(2).map((item) => {

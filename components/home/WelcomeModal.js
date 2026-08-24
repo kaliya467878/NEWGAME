@@ -10,7 +10,7 @@ export default function WelcomeModal({ isOpen, onClose }) {
       <div className="welcome-modal-card" onClick={(e) => e.stopPropagation()}>
         {/* Header Section */}
         <div style={{ textAlign: "center", paddingTop: "2rem", paddingBottom: "1rem", position: "relative" }}>
-          <div style={{ fontSize: "10px", color: "#a1a1aa", letterSpacing: "4px", fontWeight: "700", marginBottom: "4px" }}>WELCOME TO</div>
+          <div style={{ fontSize: "10px", color: "var(--theme-text-secondary)", letterSpacing: "4px", fontWeight: "700", marginBottom: "4px" }}>WELCOME TO</div>
           <div style={{ fontSize: "28px", fontWeight: "900", color: "var(--theme-text)", letterSpacing: "1px" }}>
             LUCKY<span style={{ color: "var(--theme-green)" }}>NOVA</span>
           </div>
@@ -22,8 +22,8 @@ export default function WelcomeModal({ isOpen, onClose }) {
         </div>
 
         {/* Modal Body */}
-        <div style={{ padding: "0 1.5rem 1.5rem", color: "#d1d5db", fontSize: "13px", lineHeight: "1.6" }}>
-          <p style={{ color: "#a1a1aa", marginBottom: "1.5rem", textAlign: "center" }}>
+        <div style={{ padding: "0 1.5rem 1.5rem", color: "var(--theme-text)", fontSize: "13px", lineHeight: "1.6" }}>
+          <p style={{ color: "var(--theme-text-secondary)", marginBottom: "1.5rem", textAlign: "center" }}>
             A secure and rewarding gaming experience starts here.<br />
             Please make sure you are accessing the official <span style={{ color: "var(--theme-green)", fontWeight: "600" }}>LuckyNova</span> website only. Beware of fake platforms, imitation websites, and unauthorized agents claiming to represent <span style={{ color: "var(--theme-green)", fontWeight: "600" }}>LuckyNova</span>.
           </p>
@@ -35,24 +35,24 @@ export default function WelcomeModal({ isOpen, onClose }) {
               <span>FOR YOUR SAFETY:</span>
             </div>
             <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "10px", textAlign: "left" }}>
-              <li style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "12px", color: "#d1d5db" }}>
+              <li style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "12px", color: "var(--theme-text)" }}>
                 <span style={{ color: "var(--theme-green)" }}>✓</span> Always verify our official website link
               </li>
-              <li style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "12px", color: "#d1d5db" }}>
+              <li style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "12px", color: "var(--theme-text)" }}>
                 <span style={{ color: "var(--theme-green)" }}>✓</span> Never share your login details or OTP with anyone
               </li>
-              <li style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "12px", color: "#d1d5db" }}>
+              <li style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "12px", color: "var(--theme-text)" }}>
                 <span style={{ color: "var(--theme-green)" }}>✓</span> Contact official support for any assistance
               </li>
-              <li style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "12px", color: "#d1d5db" }}>
+              <li style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "12px", color: "var(--theme-text)" }}>
                 <span style={{ color: "var(--theme-green)" }}>✓</span> Play responsibly and stay secure
               </li>
             </ul>
           </div>
 
           <div style={{ textAlign: "center", marginBottom: "1.5rem" }}>
-            <p style={{ color: "#c5a85c", fontWeight: "600", fontSize: "12px", marginBottom: "4px" }}>Thank you for choosing LuckyNova.</p>
-            <p style={{ color: "#a1a1aa", fontSize: "12px" }}>We wish you a safe and enjoyable experience!</p>
+            <p style={{ color: "var(--theme-primary)", fontWeight: "600", fontSize: "12px", marginBottom: "4px" }}>Thank you for choosing LuckyNova.</p>
+            <p style={{ color: "var(--theme-text-secondary)", fontSize: "12px" }}>We wish you a safe and enjoyable experience!</p>
           </div>
 
           {/* Official Link Button */}

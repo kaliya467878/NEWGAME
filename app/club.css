@@ -43,7 +43,9 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  background: var(--theme-primary);
+  background: #FFFFFF;
+    color: var(--theme-text) !important;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
   color: #FFFFFF !important;
   display: flex;
   align-items: center;
@@ -210,7 +212,7 @@
 
     border-radius:14px;
 
-    background: var(--theme-bg-card);
+    background: var(--theme-bg-pill);
 
     border:1px solid var(--theme-border);
 
@@ -258,7 +260,7 @@
 
     background: var(--theme-green);
 
-    color:#111111;
+    color: #FFFFFF;
 
     font-size:13px;
     font-weight:800;
@@ -540,8 +542,7 @@
 
     border:1px solid var(--theme-border);
 
-    box-shadow:
-        0 8px 24px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
 }
 
 .club-announce-icon{
@@ -1891,7 +1892,7 @@
   width: 100%;
   max-width: 480px;
   background: #FFFFFF;
-  border-top: 1px solid #EAEAEA;
+  border-top: 1px solid rgba(0,0,0,0.04);
   display: flex;
   justify-content: space-around;
   padding: 8px 0;
@@ -3290,7 +3291,7 @@
 
     border-radius:16px;
 
-    background: var(--theme-green);
+    background: var(--theme-primary);
 
     color:#111;
 
@@ -3801,8 +3802,7 @@ input:focus-visible{
 .terms-flat-telegram-btn:hover {
     transform: translateY(-3px) scale(1.05);
     background: var(--theme-bg-card);
-    box-shadow: 
-        0 8px 24px rgba(56, 189, 248, 0.6),
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06),
         0 0 15px rgba(56, 189, 248, 0.3);
 }
 
@@ -3882,7 +3882,7 @@ input:focus-visible{
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 10px rgba(255, 90, 95, 0.4);
+  box-shadow: 0 4px 15px rgba(71, 129, 255, 0.3);
   border: 3px solid #FFFFFF;
 }
 .goa-promo-dial {
@@ -3895,7 +3895,7 @@ input:focus-visible{
   justify-content: center;
 }
 .goa-promo-go {
-  color: var(--theme-text);
+  color: #FFFFFF;
   font-weight: 800;
   font-size: 16px;
   text-shadow: 1px 1px 2px rgba(0,0,0,0.2);

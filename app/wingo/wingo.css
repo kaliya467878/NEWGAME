@@ -21,7 +21,7 @@
     radial-gradient(circle at 20% 6%, rgba(71, 129, 255, 0.2), transparent 42%),
     radial-gradient(circle at 85% 18%, rgba(109,40,217,.12), transparent 46%),
     radial-gradient(circle at 45% 92%, rgba(71, 129, 255, 0.2), transparent 55%),
-    var(--theme-primary);
+    var(--theme-bg-soft);
 }
 
 .wingo-game > *{
@@ -37,7 +37,7 @@
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(8,8,8,.72);
+  background: #FFFFFF;
   border-bottom: 1px solid var(--theme-border);
   backdrop-filter: blur(var(--theme-glass-blur));
 }
@@ -270,7 +270,7 @@
   margin: 0 0.75rem 0.625rem;
   background:
     radial-gradient(circle at 10% 20%, var(--theme-border), transparent 45%),
-    var(--theme-primary);
+    var(--theme-bg-soft);
   border-radius: 16px;
   border: 1px solid var(--theme-border);
   position: relative;
@@ -459,7 +459,7 @@
   border-radius: 14px;
   background:
     radial-gradient(circle at 30% 20%, var(--theme-border), transparent 60%),
-    var(--theme-primary);
+    var(--theme-bg-soft);
   border: 2px solid var(--theme-gold);
   box-shadow:
     0 12px 30px rgba(0, 0, 0, 0.05),
@@ -577,7 +577,7 @@
 }
 
 .wg-num-btn.green {
-  background: var(--theme-primary);
+  background: var(--theme-bg-soft);
 }
 .wg-num-btn.red {
   background: radial-gradient(circle at 35% 25%, #fca5a5 0%, #ef4444 50%, #b91c1c 100%);
@@ -708,7 +708,7 @@
 }
 
 .wg-size-btn.big { background: radial-gradient(circle at 35% 25%, #fca5a5 0%, #f97316 65%, #9a3412 100%); }
-.wg-size-btn.small { background: var(--theme-primary); }
+.wg-size-btn.small { background: var(--theme-bg-soft); }
 .wg-size-btn:disabled { opacity: 0.45; cursor: not-allowed; }
 
 /* History */
@@ -825,7 +825,7 @@
 
 .wg-table-num::before { display: none; }
 
-.wg-table-num.green { background: var(--theme-primary); }
+.wg-table-num.green { background: var(--theme-bg-soft); }
 .wg-table-num.red { background: radial-gradient(circle at 35% 25%, #fca5a5 0%, #ef4444 50%, #b91c1c 100%); }
 .wg-table-num.v0 {
   background: linear-gradient(135deg, #7c3aed 0%, #7c3aed 50%, #ef4444 50%, #ef4444 100%);
@@ -848,11 +848,11 @@
     inset 0 1px 2px var(--theme-border);
 }
 
-.wg-dot.green { background: var(--theme-primary); }
+.wg-dot.green { background: var(--theme-bg-soft); }
 .wg-dot.red { background: radial-gradient(circle at 35% 25%, #fca5a5 0%, #ef4444 70%, #b91c1c 100%); }
 .wg-dot.violet { background: radial-gradient(circle at 35% 25%, #d8b4fe 0%, #8b5cf6 70%, #5b21b6 100%); }
 
-.wg-mini-ball.green { background: var(--theme-primary); }
+.wg-mini-ball.green { background: var(--theme-bg-soft); }
 .wg-mini-ball.red { background: radial-gradient(circle at 35% 25%, #fca5a5 0%, #ef4444 50%, #b91c1c 100%); }
 .wg-mini-ball.v0 {
   background: linear-gradient(135deg, #7c3aed 0%, #7c3aed 50%, #ef4444 50%, #ef4444 100%);
@@ -887,7 +887,7 @@
 
 .wg-chart-ball::before { display: none; }
 
-.wg-chart-ball.green { background: var(--theme-primary); }
+.wg-chart-ball.green { background: var(--theme-bg-soft); }
 .wg-chart-ball.red { background: radial-gradient(circle at 30% 25%, #ff9aa8 0%, #ef4444 45%, #8a1010 100%); }
 .wg-chart-ball.v0 { background: #8B5CF6; }
 .wg-chart-ball.v5 { background: #8B5CF6; }
