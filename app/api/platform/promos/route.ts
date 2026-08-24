@@ -15,7 +15,7 @@ export async function GET(_req: NextRequest) {
       },
     });
 
-    const defaultImages = ["/design/banners/wingo-payout.png", "/design/banners/first-deposit-bonus.png", "/design/banners/login-bonus.png"];
+    const defaultImages = ["/design/banners/wingo-payout-v2.png", "/design/banners/first-deposit-bonus-v2.png", "/design/banners/login-bonus-v2.png"];
     const carousel = banners.map((b, index) => ({
       id: b.id,
       title: b.title,
@@ -25,9 +25,9 @@ export async function GET(_req: NextRequest) {
 
     if (carousel.length === 0) {
       carousel.push(
-        { id: "slide-1", title: "Join Lucky Nova", image: "/design/banners/wingo-payout.png", link: "/wingo/30s" },
-        { id: "slide-2", title: "First Deposit Bonus", image: "/design/banners/first-deposit-bonus.png", link: "/wallet/deposit" },
-        { id: "slide-3", title: "Login Reward Tier", image: "/design/banners/login-bonus.png", link: "/account/vip" }
+        { id: "slide-1", title: "Join Lucky Nova", image: "/design/banners/wingo-payout-v2.png", link: "/wingo/30s" },
+        { id: "slide-2", title: "First Deposit Bonus", image: "/design/banners/first-deposit-bonus-v2.png", link: "/wallet/deposit" },
+        { id: "slide-3", title: "Login Reward Tier", image: "/design/banners/login-bonus-v2.png", link: "/account/vip" }
       );
     }
 

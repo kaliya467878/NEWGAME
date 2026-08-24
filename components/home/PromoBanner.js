@@ -15,7 +15,7 @@ export default function PromoBanner() {
       .then((resData) => {
         if (activeFetch && resData?.success && Array.isArray(resData?.data?.carousel)) {
           // FORCE OVERRIDE DB DATA
-          const defaultImages = ["/design/banners/wingo-payout.png", "/design/banners/first-deposit-bonus.png", "/design/banners/login-bonus.png"];
+          const defaultImages = ["/design/banners/wingo-payout-v2.png", "/design/banners/first-deposit-bonus-v2.png", "/design/banners/login-bonus-v2.png"];
           resData.data.carousel = resData.data.carousel.map((b, index) => ({
             ...b,
             image: defaultImages[index % defaultImages.length]
@@ -32,9 +32,9 @@ export default function PromoBanner() {
   }, []);
 
   const activeSlides = slides.length > 0 ? slides : [
-    { id: "slide-1", title: "Join Lucky Nova", image: "/design/banners/wingo-payout.png", link: "/wingo/30s" },
-    { id: "slide-2", title: "First Deposit Bonus", image: "/design/banners/first-deposit-bonus.png", link: "/wallet/deposit" },
-    { id: "slide-3", title: "Login Reward Tier", image: "/design/banners/login-bonus.png", link: "/account/vip" }
+    { id: "slide-1", title: "Join Lucky Nova", image: "/design/banners/wingo-payout-v2.png", link: "/wingo/30s" },
+    { id: "slide-2", title: "First Deposit Bonus", image: "/design/banners/first-deposit-bonus-v2.png", link: "/wallet/deposit" },
+    { id: "slide-3", title: "Login Reward Tier", image: "/design/banners/login-bonus-v2.png", link: "/account/vip" }
   ];
 
   const handleScroll = () => {
