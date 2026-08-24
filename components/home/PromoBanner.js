@@ -10,7 +10,7 @@ export default function PromoBanner() {
 
   useEffect(() => {
     let activeFetch = true;
-    fetch("/api/platform/promos")
+    fetch("/api/platform/promos?v=" + Date.now(), { cache: "no-store" })
       .then((res) => res.json())
       .then((resData) => {
         if (activeFetch && resData?.success && Array.isArray(resData?.data?.carousel)) {
