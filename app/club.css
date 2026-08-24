@@ -3906,3 +3906,14 @@ input:focus-visible{
   font-weight: 700;
   font-size: 11px;
 }
+
+.club-game-item {
+    transition: transform 0.25s ease;
+    cursor: pointer;
+}
+.club-game-item:hover {
+    transform: translateY(-5px);
+}
+.club-game-item:active {
+    transform: translateY(-2px) scale(0.99);
+}

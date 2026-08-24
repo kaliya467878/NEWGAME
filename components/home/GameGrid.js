@@ -243,7 +243,7 @@ function GameBadge({ game }) {
 
 function PopularGameCard({ game, onComingSoon }) {
   const cardClass = [
-    "club-popular-card",
+      "club-game-item",
     game.className,
     game.featured ? "featured" : "",
     game.comingSoon ? "coming-soon" : "",
@@ -398,7 +398,7 @@ function HomeGameSection({ catKey, label, games, onComingSoon }) {
               <button
                 key={game.slug}
                 onClick={() => onComingSoon(isSoon)}
-                className="club-popular-card coming-soon"
+                className="club-game-item coming-soon"
                 style={{ display: "flex", flexDirection: "column", width: "100%", textDecoration: "none", border: "none", padding: 0, cursor: "pointer", boxShadow: "none" }}
               >
                 {cardBody}
@@ -407,7 +407,7 @@ function HomeGameSection({ catKey, label, games, onComingSoon }) {
           }
 
           return (
-            <Link key={game.slug} href={game.href} className="club-popular-card" style={{ display: "flex", flexDirection: "column", width: "100%", textDecoration: "none", border: "none", padding: 0, boxShadow: "none" }}>
+            <Link key={game.slug} href={game.href} className="club-game-item" style={{ display: "flex", flexDirection: "column", width: "100%", textDecoration: "none", border: "none", padding: 0, boxShadow: "none" }}>
               {cardBody}
             </Link>
           );
