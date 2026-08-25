@@ -180,13 +180,13 @@ export function GameHeader({
           <div className="w-full grid grid-cols-2 gap-3">
             <Link
               href="/wallet/withdraw"
-              className="rounded-xl py-3 text-center text-sm font-semibold border border-white/40 text-white bg-white/20 hover:bg-red/15 transition"
+              style={{ background: "rgba(255,255,255,0.2)", border: "1px solid rgba(255,255,255,0.4)", color: "white" }} className="rounded-xl py-3 text-center text-sm font-semibold hover:bg-red/15 transition"
             >
               Withdraw
             </Link>
             <Link
               href="/wallet/deposit"
-              className="rounded-xl py-3 text-center text-sm font-semibold border border-transparent bg-white text-blue-500 hover:brightness-105 transition"
+              style={{ background: "#FFFFFF", color: "#3b82f6", border: "none" }} className="rounded-xl py-3 text-center text-sm font-semibold hover:brightness-105 transition"
             >
               Deposit
             </Link>
