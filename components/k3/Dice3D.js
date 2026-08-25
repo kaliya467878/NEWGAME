@@ -20,13 +20,9 @@ const ADJACENT_FACES = {
   6: { front: 5, right: 3 } };
 
 function Face({ value, variant }) {
-  const pips = PIPS[value] || [];
-  const isYellow = value === 1 || value === 4 || value === 5;
   return (
     <div className={`k3d-face k3d-face--${variant}`}>
-      {Array.from({ length: 9 }).map((_, i) => (
-        <span key={i} className={pips.includes(i) ? `k3d-pip ${isYellow ? "k3d-pip--yellow" : "k3d-pip--white"}` : "k3d-pip-empty"} />
-      ))}
+      <img src={`/k3/images/${value}.png`} alt={`Dice ${value}`} style={{width: '100%', height: '100%', objectFit: 'contain', border: 'none'}} />
     </div>
   );
 }
