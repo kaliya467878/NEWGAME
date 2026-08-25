@@ -3912,15 +3912,14 @@ input:focus-visible{
 ========================================================== */
 
 .auth-page {
-    background: #F4F7F9 !important;
+    background: #FFFFFF !important;
     min-height: 100vh;
 }
 
 /* Beautiful Top Bar */
 .auth-topbar {
-    background: rgba(255, 255, 255, 0.8) !important;
-    backdrop-filter: blur(20px) !important;
-    border-bottom: 1px solid rgba(0,0,0,0.05) !important;
+    background: #FFFFFF !important;
+    border-bottom: none !important;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -3975,12 +3974,10 @@ input:focus-visible{
 }
 
 .register-card {
-    background: rgba(255, 255, 255, 0.95) !important;
-    backdrop-filter: blur(30px) !important;
-    border: 1px solid rgba(255, 255, 255, 1) !important;
-    border-radius: 28px !important;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0,0,0,0.02) !important;
-    padding: 28px 24px !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 10px 24px !important;
 }
 
 /* Tabs */
