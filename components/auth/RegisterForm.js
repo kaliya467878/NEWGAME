@@ -54,10 +54,7 @@ export default function RegisterForm() {
       return;
     }
 
-    if (!form.inviteCode || !form.inviteCode.trim()) {
-      setError("Invite code is required.");
-      return;
-    }
+    
 
     if (!agree) {
       setError("Please agree to Privacy Agreement");

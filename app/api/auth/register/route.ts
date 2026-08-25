@@ -34,19 +34,17 @@ export async function POST(req: NextRequest) {
       }, { status: 400 });
     }
 
-    if (!referralCode || !referralCode.trim()) {
-      return NextResponse.json({ message: "Invite code is required." }, { status: 400 });
+    
+
+    let referredById = null;
+    if (referralCode && referralCode.trim()) {
+      const parent = await prisma.user.findUnique({
+        where: { referralCode: referralCode.trim().toUpperCase() },
+      });
+      if (parent) {
+        referredById = parent.id;
+      }
     }
-
-    const parent = await prisma.user.findUnique({
-      where: { referralCode: referralCode.trim().toUpperCase() },
-    });
-
-    if (!parent) {
-      return NextResponse.json({ message: "Invalid invite code." }, { status: 400 });
-    }
-
-    const referredById = parent.id;
 
     const passwordHash = await hashPassword(password);
     const { signupBonus } = await getBonusSettings();
