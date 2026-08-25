@@ -347,11 +347,47 @@ const getCategoryLabel = (cat) => {
 };
 
 function HomeGameSection({ catKey, label, games, onComingSoon }) {
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el || games.length <= 3) return;
+    
+    let isTouching = false;
+    let touchTimeout;
+    
+    const handleTouch = () => {
+      isTouching = true;
+      clearTimeout(touchTimeout);
+      touchTimeout = setTimeout(() => isTouching = false, 3000);
+    };
+    
+    el.addEventListener('touchstart', handleTouch, {passive: true});
+    el.addEventListener('wheel', handleTouch, {passive: true});
+    
+    const interval = setInterval(() => {
+      if (isTouching) return;
+      const itemWidth = el.scrollWidth / games.length;
+      if (el.scrollLeft + el.clientWidth >= el.scrollWidth - 10) {
+        el.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        el.scrollBy({ left: itemWidth, behavior: 'smooth' });
+      }
+    }, 4000);
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(touchTimeout);
+      el.removeEventListener('touchstart', handleTouch);
+      el.removeEventListener('wheel', handleTouch);
+    };
+  }, [games.length]);
+
   if (games.length === 0) return null;
   const Icon = CATEGORY_ICONS[catKey] || CircleDashed;
 
   return (
-    <div className="mb-8 animate-fade-in" style={{ padding: "0 16px" }}>
+    <div className="mb-8 animate-fade-in" style={{ padding: "0 16px", overflow: "hidden" }}>
       <div className="club-section-header" style={{ display: "flex", alignItems: "center", marginBottom: "16px", padding: 0 }}>
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
           <span style={{ color: "var(--theme-green)", display: "flex", alignItems: "center" }}>
@@ -361,7 +397,18 @@ function HomeGameSection({ catKey, label, games, onComingSoon }) {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-3">
+      <div 
+        ref={scrollRef}
+        className="horizontal-swipe-grid" 
+        style={{ 
+          display: "flex", 
+          gap: "12px", 
+          overflowX: "auto", 
+          scrollSnapType: "x mandatory", 
+          scrollbarWidth: "none",
+          paddingBottom: "10px"
+        }}
+      >
         {games.map((game) => {
           const isSoon = COMING_SOON_GAMES[game.slug];
           const cardBody = (
