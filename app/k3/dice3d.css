@@ -129,3 +129,9 @@
   .k3d-scene { --die: 68px; --half: 34px; }
   .k3d-pip { max-width: 12px; }
 }
+
+
+/* Remove white glare from 3D dice faces */
+.k3d-face::before {
+    display: none !important;
+}

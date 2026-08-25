@@ -126,7 +126,7 @@ function ResultBalls({ result }: { result: FiveDResultDto }) {
       {digits.map((d, i) => (
         <span
           key={i}
-          className="h-7 w-7 rounded-full bg-gradient-to-b from-surface-2 to-surface border border-gold/30 flex items-center justify-center text-xs font-bold text-gold"
+          className="h-7 w-7 rounded-full bg-gradient-to-b from-surface-2 to-surface border border-blue-500/30 flex items-center justify-center text-xs font-bold text-blue-500"
         >
           {d}
         </span>
@@ -160,7 +160,7 @@ function WalletAndAnnouncement({
       <section className="card-surface rounded-2xl p-5 sm:p-6 flex flex-col items-center gap-4">
         <div className="w-full flex items-center justify-center relative">
           <div className="flex flex-col items-center gap-1">
-            <span suppressHydrationWarning className="text-2xl font-bold text-gold">
+            <span suppressHydrationWarning className="text-2xl font-bold text-blue-500">
               ₹{balance.toLocaleString("en-IN", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
@@ -178,7 +178,7 @@ function WalletAndAnnouncement({
             type="button"
             onClick={onRefresh}
             aria-label="Refresh balance"
-            className="absolute right-0 top-0 text-gold hover:text-gold-light transition-colors"
+            className="absolute right-0 top-0 text-blue-500 hover:text-cyan-400 transition-colors"
           >
             <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"
               className={refreshing ? "animate-spin" : ""}>
@@ -197,7 +197,7 @@ function WalletAndAnnouncement({
           </Link>
           <Link
             href="/wallet/deposit"
-            className="rounded-xl py-3 text-center text-sm font-semibold border border-gold/50 bg-gradient-to-r from-gold-light to-gold text-dark hover:brightness-105 transition"
+            className="rounded-xl py-3 text-center text-sm font-semibold border border-blue-500/50 bg-gradient-to-br from-cyan-400 to-blue-500 text-white hover:brightness-105 transition"
           >
             Deposit
           </Link>
@@ -206,7 +206,7 @@ function WalletAndAnnouncement({
 
       {announcement && (
         <section className="card-surface rounded-2xl px-4 py-3 flex items-center gap-3" style={{ border: "1px solid rgba(212, 175, 55, 0.25)" }}>
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--gold)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
             <path d="M11 5 6 9H2v6h4l5 4z" />
             <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
           </svg>
@@ -220,7 +220,7 @@ function WalletAndAnnouncement({
               announcement
             )}
           </div>
-          <span className="text-xs font-semibold text-gold shrink-0 cursor-pointer">Detail</span>
+          <span className="text-xs font-semibold text-blue-500 shrink-0 cursor-pointer">Detail</span>
         </section>
       )}
     </div>
@@ -370,7 +370,7 @@ export function GameBoard({ mode, modeLabel }: { mode: string; modeLabel: string
 
   const accentClass = useMemo(() => {
     if (betType === "SUM_BIG_SMALL") return selection === "BIG" ? "text-blue" : "text-orange";
-    return "text-gold";
+    return "text-blue-500";
   }, [betType, selection]);
 
   function pickSelectorTab(tab: SelectorTab) {
@@ -479,7 +479,7 @@ export function GameBoard({ mode, modeLabel }: { mode: string; modeLabel: string
                     {d}
                   </span>
                 ))}
-                <span className="text-[11px] font-bold bg-gold/20 text-gold px-1.5 py-0.5 rounded ml-0.5 self-center">
+                <span className="text-[11px] font-bold bg-blue-500/20 text-blue-500 px-1.5 py-0.5 rounded ml-0.5 self-center">
                   {latestResult.sum}
                 </span>
               </>
@@ -533,7 +533,7 @@ export function GameBoard({ mode, modeLabel }: { mode: string; modeLabel: string
         </div>
         {recentResults[0] && (
           <p className="text-center text-xs text-muted mt-1">
-            Sum <span className="text-gold font-semibold">{recentResults[0].sum}</span>
+            Sum <span className="text-blue-500 font-semibold">{recentResults[0].sum}</span>
           </p>
         )}
       </section>
@@ -566,8 +566,8 @@ export function GameBoard({ mode, modeLabel }: { mode: string; modeLabel: string
               className={clsx(
                 "rounded-xl py-2.5 text-sm font-bold border transition-all duration-200",
                 selectorTab === tab
-                  ? "border-gold text-dark bg-gradient-to-r from-gold-light to-gold shadow-md"
-                  : "border-border text-muted hover:text-foreground bg-surface-2"
+                  ? "border-blue-500 text-dark bg-gradient-to-br from-cyan-400 to-blue-500 text-white shadow-md"
+                  : "border-slate-200 text-slate-500 hover:text-blue-600 bg-slate-50"
               )}
             >
               {tab}
@@ -580,12 +580,12 @@ export function GameBoard({ mode, modeLabel }: { mode: string; modeLabel: string
             <div className="flex justify-between items-center px-1">
               <span className="text-xs font-bold text-muted uppercase tracking-wider">Position {selectorTab} · 8.82x</span>
               {betType === "POSITION_NUMBER" && selection.startsWith(`${selectorTab}:`) && (
-                <span className="text-[10px] text-gold font-medium bg-gold/10 px-2 py-0.5 rounded border border-gold/20">
+                <span className="text-[10px] text-blue-500 font-medium bg-blue-500/10 px-2 py-0.5 rounded border border-blue-500/20">
                   Selected: {selection.split(":")[1]}
                 </span>
               )}
             </div>
-            <div className="grid grid-cols-5 gap-2 bg-surface-2 p-2 rounded-xl border border-border">
+            <div className="grid grid-cols-5 gap-2 bg-white p-2 rounded-xl border border-slate-200 shadow-sm">
               {DIGITS.map((n) => {
                 const isSelected = betType === "POSITION_NUMBER" && selection === `${selectorTab}:${n}`;
                 return (
@@ -596,8 +596,8 @@ export function GameBoard({ mode, modeLabel }: { mode: string; modeLabel: string
                     className={clsx(
                       "aspect-square rounded-lg flex flex-col items-center justify-center font-bold transition-all duration-150",
                       isSelected
-                        ? "bg-gold text-dark scale-[1.05] ring-2 ring-gold/40 shadow-lg shadow-gold/20"
-                        : "text-muted hover:text-[var(--theme-text)] bg-background/40 hover:bg-background/80"
+                        ? "bg-blue-500 text-white scale-[1.05] ring-2 ring-blue-500/40 shadow-lg shadow-blue-500/20"
+                        : "text-slate-500 hover:text-blue-600 bg-slate-100 hover:bg-slate-200"
                     )}
                   >
                     <span className="text-base leading-none">{n}</span>
@@ -648,8 +648,8 @@ export function GameBoard({ mode, modeLabel }: { mode: string; modeLabel: string
                     key={s}
                     onClick={() => pickSum("SUM_ODD_EVEN", s)}
                     className={clsx(
-                      "rounded-xl border border-gold/20 bg-gradient-to-b from-surface-2 to-surface py-4 font-bold text-lg shadow-md hover:border-gold/50 transition",
-                      betType === "SUM_ODD_EVEN" && selection === s && "ring-4 ring-gold/70 border-gold scale-[1.03]"
+                      "rounded-xl border border-blue-500/20 bg-gradient-to-b from-surface-2 to-surface py-4 font-bold text-lg shadow-md hover:border-blue-500/50 transition",
+                      betType === "SUM_ODD_EVEN" && selection === s && "ring-4 ring-gold/70 border-blue-500 scale-[1.03]"
                     )}
                   >
                     {s.charAt(0) + s.slice(1).toLowerCase()} <span className="block text-xs font-normal mt-0.5 text-muted">1.96X</span>
@@ -742,7 +742,7 @@ export function GameBoard({ mode, modeLabel }: { mode: string; modeLabel: string
                     <span
                       className={clsx(
                         "text-xs font-semibold px-2.5 py-1 rounded-full border",
-                        bet.status === "PENDING" && "border-gold/40 text-gold bg-gold/10",
+                        bet.status === "PENDING" && "border-blue-500/40 text-blue-500 bg-blue-500/10",
                         bet.status === "WON" && "border-green/40 text-green bg-green/10",
                         bet.status === "LOST" && "border-red/40 text-red bg-red/10"
                       )}
@@ -752,7 +752,7 @@ export function GameBoard({ mode, modeLabel }: { mode: string; modeLabel: string
                   </div>
                   {isExpanded && (
                     <div className="mt-3 p-3 bg-surface-2 rounded-xl text-xs space-y-2 border border-border">
-                      <div className="text-gold font-bold text-sm mb-1">Details</div>
+                      <div className="text-blue-500 font-bold text-sm mb-1">Details</div>
                       
                       <div className="flex justify-between text-muted">
                         <span>Order ID</span>
@@ -765,7 +765,7 @@ export function GameBoard({ mode, modeLabel }: { mode: string; modeLabel: string
                               navigator.clipboard.writeText(bet.id);
                               alert("Order ID copied successfully!");
                             }}
-                            className="text-gold hover:underline p-0.5"
+                            className="text-blue-500 hover:underline p-0.5"
                           >
                             Copy
                           </button>
@@ -819,7 +819,7 @@ export function GameBoard({ mode, modeLabel }: { mode: string; modeLabel: string
 
                       <div className="flex justify-between text-muted">
                         <span>Status</span>
-                        <span className={clsx(isWon ? "text-green" : bet.status === "PENDING" ? "text-gold" : "text-red")}>
+                        <span className={clsx(isWon ? "text-green" : bet.status === "PENDING" ? "text-blue-500" : "text-red")}>
                           {bet.status === "PENDING" ? "Pending" : isWon ? "Succeed" : "Failed"}
                         </span>
                       </div>
