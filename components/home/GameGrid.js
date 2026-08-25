@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { getGameTile } from "@/lib/designAssets";
 import ComingSoonModal from "./ComingSoonModal";
 import { CircleDashed, Dices, Ticket, Gem, Rocket, Swords, Clock, Hourglass, Zap, Crown } from "lucide-react";
@@ -399,7 +399,7 @@ function HomeGameSection({ catKey, label, games, onComingSoon }) {
                 key={game.slug}
                 onClick={() => onComingSoon(isSoon)}
                 className="club-game-item coming-soon"
-                style={{ display: "flex", flexDirection: "column", width: "100%", textDecoration: "none", border: "none", padding: 0, cursor: "pointer", boxShadow: "none" }}
+                style={{ display: "flex", flexDirection: "column", flex: "0 0 calc(33.333% - 8px)", scrollSnapAlign: "start", textDecoration: "none", border: "none", padding: 0, cursor: "pointer", boxShadow: "none" }}
               >
                 {cardBody}
               </button>
@@ -407,7 +407,8 @@ function HomeGameSection({ catKey, label, games, onComingSoon }) {
           }
 
           return (
-            <Link key={game.slug} href={game.href} className="club-game-item" style={{ display: "flex", flexDirection: "column", width: "100%", textDecoration: "none", border: "none", padding: 0, boxShadow: "none" }}>
+            <Link key={game.slug} href={game.href} className="club-game-item"
+              style={{ display: "flex", flexDirection: "column", flex: "0 0 calc(33.333% - 8px)", scrollSnapAlign: "start", textDecoration: "none", border: "none", padding: 0, boxShadow: "none" }}>
               {cardBody}
             </Link>
           );

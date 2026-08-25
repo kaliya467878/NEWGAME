@@ -3901,3 +3901,7 @@ input:focus-visible{
     color: var(--theme-primary);
     transform: translateY(-2px);
 }
+
+.horizontal-swipe-grid::-webkit-scrollbar {
+    display: none;
+}
