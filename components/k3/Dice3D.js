@@ -48,7 +48,7 @@ export default function Dice3D({ value = 1, rolling = false, index = 0 }) {
     <div className="k3d-scene">
       <div 
         className={`k3d-die ${rollClass}`}
-        style={!rolling ? { transform: finalTransform } : {}}
+        style={!rolling ? { transform: finalTransform } : undefined}
       >
         <Face variant="front" value={1} />
         <Face variant="back" value={6} />

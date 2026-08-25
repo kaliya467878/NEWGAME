@@ -538,7 +538,7 @@ export default function K3GameScreen({ initialPeriod = null, initialResults = []
         // refetch once more right as the window closes so the dice land on the
         // real result and game history is updated in the same beat the roll
         // stops.
-        setIsRolling(true);
+        console.log("Rolling started!"); setIsRolling(true);
         pendingResultRef.current = null;
         pendingBetsRef.current = null;
 
