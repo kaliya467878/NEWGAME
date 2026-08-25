@@ -29,6 +29,7 @@
 }
 
 .k3d-die--rolling {
+  -webkit-animation: k3dRoll 0.55s linear infinite;
   animation: k3dRoll 0.55s linear infinite;
   transition: none;
 }
@@ -112,6 +113,10 @@
   
 }
 
+@-webkit-keyframes k3dRoll {
+  0%   { -webkit-transform: rotateX(0deg)   rotateY(0deg); transform: rotateX(0deg)   rotateY(0deg); }
+  100% { -webkit-transform: rotateX(360deg) rotateY(540deg); transform: rotateX(360deg) rotateY(540deg); }
+}
 @keyframes k3dRoll {
   0%   { transform: rotateX(0deg)   rotateY(0deg); }
   100% { transform: rotateX(360deg) rotateY(540deg); }
