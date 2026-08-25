@@ -99,13 +99,13 @@ export function GameHeader({
                 <div
                   className={`h-12 w-12 rounded-full flex items-center justify-center text-lg transition-all ${
                     active
-                      ? "bg-gradient-to-br from-gold-light to-gold text-dark shadow-md shadow-gold/30 ring-2 ring-gold/40 ring-offset-2 ring-offset-background"
+                      ? "bg-gradient-to-br from-cyan-400 to-blue-500 text-white shadow-md shadow-blue-500/30 ring-2 ring-blue-500/40 ring-offset-2 ring-offset-background"
                       : "bg-surface-2 border border-border text-muted"
                   }`}
                 >
                   <Clock size={22} />
                 </div>
-                <span className={`text-[11px] font-semibold ${active ? "text-gold" : "text-muted"}`}>
+                <span className={`text-[11px] font-semibold ${active ? "text-blue-500" : "text-muted"}`}>
                   {d.label.replace(/5D Lot |Win Go |K3 /g, "")}
                 </span>
               </div>
@@ -130,10 +130,10 @@ export function GameHeader({
 
       {/* WALLET & ANNOUNCEMENT */}
       <div className="flex flex-col gap-3 px-4 mb-4" style={{ marginTop: (!durations || durations.length === 0) ? "1rem" : "0" }}>
-        <section className="card-surface rounded-2xl p-5 sm:p-6 flex flex-col items-center gap-4">
+        <section className="rounded-2xl p-5 sm:p-6 flex flex-col items-center gap-4 shadow-xl" style={{ background: "linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%)", color: "white" }}>
           <div className="w-full flex items-center justify-center relative">
             <div className="flex flex-col items-center gap-1">
-              <span suppressHydrationWarning className="text-2xl font-bold text-gold flex flex-col items-center">
+              <span suppressHydrationWarning className="text-3xl font-extrabold text-white tracking-tight flex flex-col items-center">
                 <span>
                   ₹{balance.toLocaleString("en-IN", {
                     minimumFractionDigits: 2,
@@ -146,7 +146,7 @@ export function GameHeader({
                   </span>
                 )}
               </span>
-              <span className="text-xs text-muted flex items-center gap-1.5">
+              <span className="text-sm text-blue-100 font-medium flex items-center gap-1.5">
                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2">
                   <rect x="2" y="6" width="20" height="14" rx="2" />
                   <path d="M16 12h.01M2 10h20" />
@@ -158,7 +158,7 @@ export function GameHeader({
               type="button"
               onClick={onRefreshBalance}
               aria-label="Refresh balance"
-              className="absolute right-0 top-0 text-gold hover:text-gold-light transition-colors"
+              className="absolute right-0 top-0 text-white hover:opacity-80 transition-opacity"
             >
               <svg
                 viewBox="0 0 24 24"
@@ -180,13 +180,13 @@ export function GameHeader({
           <div className="w-full grid grid-cols-2 gap-3">
             <Link
               href="/wallet/withdraw"
-              className="rounded-xl py-3 text-center text-sm font-semibold border border-red/40 text-red bg-red/10 hover:bg-red/15 transition"
+              className="rounded-xl py-3 text-center text-sm font-semibold border border-white/40 text-white bg-white/20 hover:bg-red/15 transition"
             >
               Withdraw
             </Link>
             <Link
               href="/wallet/deposit"
-              className="rounded-xl py-3 text-center text-sm font-semibold border border-gold/50 bg-gradient-to-r from-gold-light to-gold text-dark hover:brightness-105 transition"
+              className="rounded-xl py-3 text-center text-sm font-semibold border border-transparent bg-white text-blue-500 hover:brightness-105 transition"
             >
               Deposit
             </Link>
@@ -194,13 +194,13 @@ export function GameHeader({
         </section>
 
         {announcement && (
-          <section className="card-surface rounded-2xl px-4 py-3 flex items-center gap-3" style={{ border: "1px solid rgba(212, 175, 55, 0.25)" }}>
+          <section className="bg-white rounded-2xl px-4 py-3 flex items-center gap-3 shadow-sm border border-slate-200">
             <svg
               viewBox="0 0 24 24"
               width="18"
               height="18"
               fill="none"
-              stroke="var(--gold)"
+              stroke="#3b82f6"
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -219,7 +219,7 @@ export function GameHeader({
                 announcement
               )}
             </div>
-            <span className="text-xs font-semibold text-gold shrink-0 cursor-pointer">Detail</span>
+            <span className="text-xs font-semibold text-blue-500 shrink-0 cursor-pointer">Detail</span>
           </section>
         )}
       </div>
