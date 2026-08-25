@@ -569,3 +569,17 @@
     border: none !important;
     box-shadow: 0 4px 12px rgba(59,130,246,0.3) !important;
 }
+
+
+/* Fix the gold ticket balls to be premium blue */
+.wg-mini-ball {
+    background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%) !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    box-shadow: 0 4px 10px rgba(59,130,246,0.3) !important;
+}
+
+/* Improve the 5D betting container padding */
+.fived-panel {
+    padding: 24px 16px !important;
+}

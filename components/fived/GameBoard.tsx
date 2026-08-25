@@ -126,7 +126,7 @@ function ResultBalls({ result }: { result: FiveDResultDto }) {
       {digits.map((d, i) => (
         <span
           key={i}
-          className="h-7 w-7 rounded-full bg-gradient-to-b from-surface-2 to-surface border border-blue-500/30 flex items-center justify-center text-xs font-bold text-blue-500"
+          className="h-7 w-7 rounded-full bg-slate-50 text-slate-700 border border-blue-500/30 flex items-center justify-center text-xs font-bold text-blue-500"
         >
           {d}
         </span>
@@ -566,8 +566,8 @@ export function GameBoard({ mode, modeLabel }: { mode: string; modeLabel: string
               className={clsx(
                 "rounded-xl py-2.5 text-sm font-bold border transition-all duration-200",
                 selectorTab === tab
-                  ? "border-blue-500 text-dark bg-gradient-to-br from-cyan-400 to-blue-500 text-white shadow-md"
-                  : "border-slate-200 text-slate-500 hover:text-blue-600 bg-slate-50"
+                  ? "border-blue-500 text-white bg-gradient-to-br from-cyan-400 to-blue-500 text-white shadow-md"
+                  : "border-slate-300 text-slate-600 hover:text-blue-600 bg-white shadow-sm hover:shadow-md"
               )}
             >
               {tab}
@@ -585,7 +585,7 @@ export function GameBoard({ mode, modeLabel }: { mode: string; modeLabel: string
                 </span>
               )}
             </div>
-            <div className="grid grid-cols-5 gap-2 bg-white p-2 rounded-xl border border-slate-200 shadow-sm">
+            <div className="grid grid-cols-5 gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200 shadow-inner">
               {DIGITS.map((n) => {
                 const isSelected = betType === "POSITION_NUMBER" && selection === `${selectorTab}:${n}`;
                 return (
@@ -597,7 +597,7 @@ export function GameBoard({ mode, modeLabel }: { mode: string; modeLabel: string
                       "aspect-square rounded-lg flex flex-col items-center justify-center font-bold transition-all duration-150",
                       isSelected
                         ? "bg-blue-500 text-white scale-[1.05] ring-2 ring-blue-500/40 shadow-lg shadow-blue-500/20"
-                        : "text-slate-500 hover:text-blue-600 bg-slate-100 hover:bg-slate-200"
+                        : "text-blue-700 hover:text-white bg-slate-50 hover:bg-blue-400 border border-slate-200 shadow-sm"
                     )}
                   >
                     <span className="text-base leading-none">{n}</span>
@@ -625,8 +625,8 @@ export function GameBoard({ mode, modeLabel }: { mode: string; modeLabel: string
                 <button
                   onClick={() => pickSum("SUM_BIG_SMALL", "BIG")}
                   className={clsx(
-                    "rounded-xl py-4 font-bold text-lg transition bg-blue text-[var(--theme-text)] shadow-lg shadow-blue/20 hover:brightness-105",
-                    betType === "SUM_BIG_SMALL" && selection === "BIG" && "ring-4 ring-gold/70 scale-[1.03]"
+                    "rounded-xl py-4 font-bold text-lg transition bg-blue-500 text-white shadow-lg shadow-blue-500/30 hover:brightness-105",
+                    betType === "SUM_BIG_SMALL" && selection === "BIG" && "ring-4 ring-blue-500/50 scale-[1.03]"
                   )}
                 >
                   Big (23–45) <span className="block text-xs font-normal mt-0.5 opacity-80">1.96X</span>
@@ -634,8 +634,8 @@ export function GameBoard({ mode, modeLabel }: { mode: string; modeLabel: string
                 <button
                   onClick={() => pickSum("SUM_BIG_SMALL", "SMALL")}
                   className={clsx(
-                    "rounded-xl py-4 font-bold text-lg transition bg-orange text-[var(--theme-text)] shadow-lg shadow-orange/20 hover:brightness-105",
-                    betType === "SUM_BIG_SMALL" && selection === "SMALL" && "ring-4 ring-gold/70 scale-[1.03]"
+                    "rounded-xl py-4 font-bold text-lg transition bg-orange-500 text-white shadow-lg shadow-orange-500/30 hover:brightness-105",
+                    betType === "SUM_BIG_SMALL" && selection === "SMALL" && "ring-4 ring-blue-500/50 scale-[1.03]"
                   )}
                 >
                   Small (0–22) <span className="block text-xs font-normal mt-0.5 opacity-80">1.96X</span>
@@ -648,8 +648,8 @@ export function GameBoard({ mode, modeLabel }: { mode: string; modeLabel: string
                     key={s}
                     onClick={() => pickSum("SUM_ODD_EVEN", s)}
                     className={clsx(
-                      "rounded-xl border border-blue-500/20 bg-gradient-to-b from-surface-2 to-surface py-4 font-bold text-lg shadow-md hover:border-blue-500/50 transition",
-                      betType === "SUM_ODD_EVEN" && selection === s && "ring-4 ring-gold/70 border-blue-500 scale-[1.03]"
+                      "rounded-xl border border-blue-500/20 bg-slate-50 text-slate-700 py-4 font-bold text-lg shadow-md hover:border-blue-500/50 transition",
+                      betType === "SUM_ODD_EVEN" && selection === s && "ring-4 ring-blue-500/50 border-blue-500 scale-[1.03]"
                     )}
                   >
                     {s.charAt(0) + s.slice(1).toLowerCase()} <span className="block text-xs font-normal mt-0.5 text-muted">1.96X</span>
@@ -690,7 +690,7 @@ export function GameBoard({ mode, modeLabel }: { mode: string; modeLabel: string
                   <span
                     className={clsx(
                       "text-right font-semibold justify-self-end px-2 py-0.5 rounded-full text-xs",
-                      sumBigSmall(result.sum) === "BIG" ? "bg-blue/20 text-blue" : "bg-orange/20 text-orange"
+                      sumBigSmall(result.sum) === "BIG" ? "bg-blue-500/20 text-blue-600" : "bg-orange-500/20 text-orange-600"
                     )}
                   >
                     {result.sum}
