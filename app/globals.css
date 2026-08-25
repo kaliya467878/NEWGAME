@@ -778,3 +778,12 @@ a[href*="/wallet/withdraw"], a[href*="/wallet/deposit"] {
 .wg-multi-btn, .wg-random-btn {
   font-family: 'Poppins', sans-serif !important;
 }
+
+
+/* Force Bottom Nav active color to Premium Blue */
+.club-nav-item.active {
+    color: #3b82f6 !important;
+}
+.club-nav-item.active svg {
+    stroke: #3b82f6 !important;
+}
