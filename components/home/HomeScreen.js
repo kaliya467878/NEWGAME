@@ -40,7 +40,7 @@ export default function HomeScreen() {
       <AnnouncementBar />
 
       <div className="home-main-layout" style={{ display: "flex", gap: "12px", padding: "0 12px", alignItems: "flex-start", marginBottom: "20px" }}>
-        <div style={{ width: "72px", flexShrink: 0, position: "sticky", top: "70px", zIndex: 10 }}>
+        <div style={{ width: "82px", flexShrink: 0, position: "sticky", top: "70px", zIndex: 10 }}>
           <CategoryTabs
             active={category}
             onChange={setCategory}
