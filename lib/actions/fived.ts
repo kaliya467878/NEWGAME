@@ -41,8 +41,12 @@ export async function placeBetAction(input: {
   let validSelection = false;
   if (betType === "POSITION_NUMBER") {
     const [pos, digitStr] = selection.split(":");
-    const digit = Number(digitStr);
-    validSelection = (POSITIONS as readonly string[]).includes(pos) && Number.isInteger(digit) && digit >= 0 && digit <= 9;
+    if (["BIG", "SMALL", "ODD", "EVEN"].includes(digitStr)) {
+      validSelection = (POSITIONS as readonly string[]).includes(pos);
+    } else {
+      const digit = Number(digitStr);
+      validSelection = (POSITIONS as readonly string[]).includes(pos) && Number.isInteger(digit) && digit >= 0 && digit <= 9;
+    }
   } else if (betType === "SUM_BIG_SMALL") {
     validSelection = BIG_SMALL_SELECTIONS.has(selection);
   } else if (betType === "SUM_ODD_EVEN") {

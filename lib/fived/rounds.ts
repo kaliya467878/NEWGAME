@@ -98,7 +98,12 @@ export function resolveBetMultiplier(
     const [posLabel, digitStr] = bet.selection.split(":");
     const posIndex = POSITIONS.indexOf(posLabel as Position);
     if (posIndex === -1) return 0;
-    return Number(digitStr) === digits[posIndex] ? POSITION_NUMBER_MULTIPLIER : 0;
+    const digit = digits[posIndex];
+    if (digitStr === "BIG") return digit >= 5 ? SUM_BIG_SMALL_MULTIPLIER : 0;
+    if (digitStr === "SMALL") return digit <= 4 ? SUM_BIG_SMALL_MULTIPLIER : 0;
+    if (digitStr === "ODD") return digit % 2 !== 0 ? SUM_ODD_EVEN_MULTIPLIER : 0;
+    if (digitStr === "EVEN") return digit % 2 === 0 ? SUM_ODD_EVEN_MULTIPLIER : 0;
+    return Number(digitStr) === digit ? POSITION_NUMBER_MULTIPLIER : 0;
   }
 
   if (bet.betType === "SUM_BIG_SMALL") {

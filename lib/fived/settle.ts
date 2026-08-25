@@ -282,7 +282,11 @@ async function settleOneRound(mode: FiveDMode, roundNumber: bigint) {
 }
 
 function getFiveDBetWinningMultiplier(bet: { betType: string; selection: string }): number {
-  if (bet.betType === "POSITION_NUMBER") return 9 * 0.98;
+  if (bet.betType === "POSITION_NUMBER") {
+    const val = bet.selection.split(":")[1];
+    if (["BIG", "SMALL", "ODD", "EVEN"].includes(val)) return 2 * 0.98;
+    return 9 * 0.98;
+  }
   if (bet.betType === "SUM_BIG_SMALL") return 2 * 0.98;
   if (bet.betType === "SUM_ODD_EVEN") return 2 * 0.98;
   return 0;
