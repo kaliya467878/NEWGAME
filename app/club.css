@@ -1111,7 +1111,7 @@
 }
 
 .category-svg {
-    fill: currentColor;
+    fill: none;
     transition: all 0.25s ease;
 }
 
