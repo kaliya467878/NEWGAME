@@ -89,45 +89,6 @@ export function GameHeader({
         <div style={{ width: "28px" }} className="z-10" />
       </header>
 
-      {/* DURATION TABS */}
-      {durations && durations.length > 0 && (
-        <div className="grid grid-cols-4 gap-2 mx-4 my-4">
-          {durations.map((d) => {
-            const active = activeDuration === d.id;
-            const content = (
-              <div className="flex flex-col items-center gap-1.5 cursor-pointer">
-                <div
-                  className={`h-12 w-12 rounded-full flex items-center justify-center text-lg transition-all ${
-                    active
-                      ? "bg-gradient-to-br from-cyan-400 to-blue-500 text-white shadow-md shadow-blue-500/30 ring-2 ring-blue-500/40 ring-offset-2 ring-offset-background"
-                      : "bg-surface-2 border border-border text-muted"
-                  }`}
-                >
-                  <Clock size={22} />
-                </div>
-                <span className={`text-[11px] font-semibold ${active ? "text-blue-500" : "text-muted"}`}>
-                  {d.label.replace(/5D Lot |Win Go |K3 /g, "")}
-                </span>
-              </div>
-            );
-
-            if (durationHrefPrefix) {
-              return (
-                <Link key={d.id} href={`${durationHrefPrefix}/${d.id}`}>
-                  {content}
-                </Link>
-              );
-            }
-
-            return (
-              <div key={d.id} onClick={() => onDurationChange?.(d.id)}>
-                {content}
-              </div>
-            );
-          })}
-        </div>
-      )}
-
       {/* WALLET & ANNOUNCEMENT */}
       <div className="flex flex-col gap-3 px-4 mb-4" style={{ marginTop: (!durations || durations.length === 0) ? "1rem" : "0" }}>
         <section className="rounded-2xl p-5 sm:p-6 flex flex-col items-center gap-4 shadow-xl" style={{ background: "linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%)", color: "white" }}>
@@ -223,6 +184,46 @@ export function GameHeader({
           </section>
         )}
       </div>
-    </>
+    {/* DURATION TABS */}
+      {durations && durations.length > 0 && (
+        <div className="grid grid-cols-4 gap-2 mx-4 my-4">
+          {durations.map((d) => {
+            const active = activeDuration === d.id;
+            const content = (
+              <div className="flex flex-col items-center gap-1.5 cursor-pointer">
+                <div
+                  className={`h-12 w-12 rounded-full flex items-center justify-center text-lg transition-all ${
+                    active
+                      ? "bg-gradient-to-br from-cyan-400 to-blue-500 text-white shadow-md shadow-blue-500/30 ring-2 ring-blue-500/40 ring-offset-2 ring-offset-background"
+                      : "bg-surface-2 border border-border text-muted"
+                  }`}
+                >
+                  <Clock size={22} />
+                </div>
+                <span className={`text-[11px] font-semibold ${active ? "text-blue-500" : "text-muted"}`}>
+                  {d.label.replace(/5D Lot |Win Go |K3 /g, "")}
+                </span>
+              </div>
+            );
+
+            if (durationHrefPrefix) {
+              return (
+                <Link key={d.id} href={`${durationHrefPrefix}/${d.id}`}>
+                  {content}
+                </Link>
+              );
+            }
+
+            return (
+              <div key={d.id} onClick={() => onDurationChange?.(d.id)}>
+                {content}
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      
+      </>
   );
 }
