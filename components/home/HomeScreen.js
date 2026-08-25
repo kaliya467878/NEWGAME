@@ -39,15 +39,15 @@ export default function HomeScreen() {
 
       <AnnouncementBar />
 
-      <div className="home-main-layout" style={{ display: "flex", gap: "10px", padding: "0 10px", alignItems: "flex-start", marginBottom: "20px" }}>
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <GameGrid category={category} />
-        </div>
-        <div style={{ width: "80px", flexShrink: 0 }}>
+      <div className="home-main-layout" style={{ display: "flex", gap: "12px", padding: "0 12px", alignItems: "flex-start", marginBottom: "20px" }}>
+        <div style={{ width: "72px", flexShrink: 0, position: "sticky", top: "70px", zIndex: 10 }}>
           <CategoryTabs
             active={category}
             onChange={setCategory}
           />
+        </div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <GameGrid category={category} />
         </div>
       </div>
 

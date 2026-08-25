@@ -1037,25 +1037,16 @@
 .club-categories {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 16px;
     margin: 0;
-    padding: 14px 8px;
+    padding: 16px 6px;
     overflow-y: auto;
-
-    scrollbar-width:none;
-
-    background: var(--theme-bg-card);
-
-    border: 1px solid var(--theme-border);
-
-    border-radius:20px;
-
-    backdrop-filter:blur(10px);
-
-    box-shadow:
-        0 8px 32px rgba(0, 0, 0, 0.05),
-        inset 0 1px 1px var(--theme-border);
-}
+    scrollbar-width: none;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 18px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(71, 129, 255, 0.08);}
 
 .club-categories::-webkit-scrollbar{
 
@@ -3907,4 +3898,10 @@ input:focus-visible{
 }
 .club-game-item:active {
     transform: translateY(-2px) scale(0.99);
+}
+
+.club-category-tab:hover:not(.active) .club-category-icon-wrap {
+    background: #eef2ff;
+    color: var(--theme-primary);
+    transform: translateY(-2px);
 }
