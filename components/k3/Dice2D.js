@@ -49,11 +49,7 @@ export default function Dice2D({ value = 1, rolling = false, index = 0 }) {
       <span className="k3d2-shadow" />
       <div className="k3d2-float" style={{ "--i": index }}>
         <div className={`k3d2-die ${rolling ? "rolling" : ""} ${popping ? "pop" : ""}`}>
-          <div className="k3d2-face" role="img" aria-label={`Dice showing ${face}`}>
-            {Array.from({ length: 9 }).map((_, i) => (
-              <span key={i} className={pips.includes(i) ? "k3d2-pip" : "k3d2-pip-empty"} />
-            ))}
-          </div>
+          <img src={`/k3/images/${face}.png`} alt={`Dice ${face}`} className="w-16 h-16 object-contain drop-shadow-md" />
         </div>
       </div>
     </div>
