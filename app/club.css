@@ -1034,17 +1034,13 @@
    CATEGORIES
 ========================================================== */
 
-.club-categories{
-
-    display:flex;
-
-    gap:14px;
-
-    margin:0 18px 20px;
-
-    padding:14px 18px;
-
-    overflow-x:auto;
+.club-categories {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin: 0;
+    padding: 14px 8px;
+    overflow-y: auto;
 
     scrollbar-width:none;
 
@@ -3663,12 +3659,7 @@ input:focus-visible{
         padding-right:16px;
     }
 
-    .club-categories{
-
-        margin-left:16px;
-
-        margin-right:16px;
-    }
+    /* Removed .club-categories mobile margins */
 }
 
 @media (max-width:480px){

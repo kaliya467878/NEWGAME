@@ -39,12 +39,17 @@ export default function HomeScreen() {
 
       <AnnouncementBar />
 
-      <CategoryTabs
-        active={category}
-        onChange={setCategory}
-      />
-
-      <GameGrid category={category} />
+      <div className="home-main-layout" style={{ display: "flex", gap: "10px", padding: "0 10px", alignItems: "flex-start", marginBottom: "20px" }}>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <GameGrid category={category} />
+        </div>
+        <div style={{ width: "80px", flexShrink: 0 }}>
+          <CategoryTabs
+            active={category}
+            onChange={setCategory}
+          />
+        </div>
+      </div>
 
       <LobbyWidgets />
 
