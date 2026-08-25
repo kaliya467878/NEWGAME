@@ -90,7 +90,7 @@ export function GameHeader({
       </header>
 
       {/* WALLET & ANNOUNCEMENT */}
-      <div className="flex flex-col gap-3 px-4 mb-4" style={{ marginTop: (!durations || durations.length === 0) ? "1rem" : "0" }}>
+      <div className="flex flex-col gap-3 px-4 mb-4 mt-3">
         <section className="rounded-2xl p-5 sm:p-6 flex flex-col items-center gap-4 shadow-xl" style={{ background: "linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%)", color: "white" }}>
           <div className="w-full flex items-center justify-center relative">
             <div className="flex flex-col items-center gap-1">
