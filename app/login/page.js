@@ -49,30 +49,14 @@ export default function LoginPage() {
       <AuthTopBar />
 
       <div className="register-wrapper">
-        <section className="premium-hero">
-          <div className="premium-hero-content">
-            <div className="premium-left">
-              <h1 className="hero-title">
-                Welcome
-                <br />
-                Back
-              </h1>
-              <p className="hero-subtitle">
-                Continue your Lucky Nova journey and access your wallet, games and rewards instantly.
-              </p>
-            </div>
-            <div className="premium-right">
-              <img
-                src="/images/register-hero.png"
-                alt="Login"
-                className="hero-image"
-              />
-            </div>
-          </div>
-        </section>
+        
 
         <section className="premium-form-section">
           <div className="register-card">
+            <div style={{ textAlign: "center", marginBottom: "32px", marginTop: "10px" }}>
+              <h1 style={{ fontSize: "32px", fontWeight: "800", color: "var(--theme-text)", marginBottom: "8px", letterSpacing: "-0.5px" }}>Welcome Back</h1>
+              <p style={{ fontSize: "15px", color: "#64748b", fontWeight: "500" }}>Login to your Lucky Nova account</p>
+            </div>
             <div className="register-tabs">
               <button
                 type="button"

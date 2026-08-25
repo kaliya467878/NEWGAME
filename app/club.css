@@ -3968,7 +3968,7 @@ input:focus-visible{
 
 /* The Glass Form Card */
 .premium-form-section {
-    margin-top: -40px !important;
+    margin-top: 30px !important;
     padding: 0 20px 40px !important;
     position: relative;
     z-index: 10;

@@ -93,41 +93,15 @@ export default function RegisterForm() {
 
 <div className="register-wrapper">
 
-  <section className="premium-hero">
-
-    <div className="premium-hero-content">
-
-      <div className="premium-left">
-
-        <h1 className="hero-title">
-          Create Your
-          <br />
-          Account
-        </h1>
-
-        <p className="hero-subtitle">
-          Create your account by phone number or email
-        </p>
-
-      </div>
-
-      <div className="premium-right">
-
-        <img
-          src="/images/register-hero.png"
-          alt="Register"
-          className="hero-image"
-        />
-
-      </div>
-
-    </div>
-
-  </section>
+  
 
   <section className="premium-form-section">
 
     <div className="register-card">
+            <div style={{ textAlign: "center", marginBottom: "32px", marginTop: "10px" }}>
+              <h1 style={{ fontSize: "32px", fontWeight: "800", color: "var(--theme-text)", marginBottom: "8px", letterSpacing: "-0.5px" }}>Create Account</h1>
+              <p style={{ fontSize: "15px", color: "#64748b", fontWeight: "500" }}>Join Lucky Nova today</p>
+            </div>
 
       <div className="register-tabs">
 
