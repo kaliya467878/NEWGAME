@@ -1,4 +1,7 @@
-
+const fs = require('fs');
+let path = 'components/k3/Dice3D.js';
+if (fs.existsSync(path)) {
+  let code = `
 "use client";
 const PIPS = {
   1: [4],
@@ -21,7 +24,7 @@ const ADJACENT_FACES = {
 function Face({ value, variant }) {
   const pips = PIPS[value] || [];
   return (
-    <div className={`k3d-face k3d-face--${variant}`}>
+    <div className={\`k3d-face k3d-face--\${variant}\`}>
       {Array.from({ length: 9 }).map((_, i) => (
         <span key={i} className={pips.includes(i) ? "k3d-pip-black" : "k3d-pip-empty"} />
       ))}
@@ -32,22 +35,22 @@ function Face({ value, variant }) {
 export default function Dice3D({ value = 1, rolling = false, index = 0 }) {
   const tiltX = -15;
   const tiltY = -25;
-  const baseTransform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+  const baseTransform = \`rotateX(\${tiltX}deg) rotateY(\${tiltY}deg)\`;
   const rotFor = {
-    1: `rotateX(0deg) rotateY(0deg)`,
-    6: `rotateX(180deg) rotateY(0deg)`,
-    2: `rotateX(90deg) rotateY(0deg)`,
-    5: `rotateX(-90deg) rotateY(0deg)`,
-    3: `rotateX(0deg) rotateY(-90deg)`,
-    4: `rotateX(0deg) rotateY(90deg)`
+    1: \`rotateX(0deg) rotateY(0deg)\`,
+    6: \`rotateX(180deg) rotateY(0deg)\`,
+    2: \`rotateX(90deg) rotateY(0deg)\`,
+    5: \`rotateX(-90deg) rotateY(0deg)\`,
+    3: \`rotateX(0deg) rotateY(-90deg)\`,
+    4: \`rotateX(0deg) rotateY(90deg)\`
   };
-  const rollClass = rolling ? `rolling-3d-${index}` : "";
-  const finalTransform = `${baseTransform} ${rotFor[value] || rotFor[1]}`;
+  const rollClass = rolling ? \`rolling-3d-\${index}\` : "";
+  const finalTransform = \`\${baseTransform} \${rotFor[value] || rotFor[1]}\`;
 
   return (
     <div className="k3d-scene">
       <div 
-        className={`k3d-die ${rollClass}`}
+        className={\`k3d-die \${rollClass}\`}
         style={!rolling ? { transform: finalTransform } : {}}
       >
         <Face variant="front" value={1} />
@@ -59,4 +62,8 @@ export default function Dice3D({ value = 1, rolling = false, index = 0 }) {
       </div>
     </div>
   );
+}
+`;
+  fs.writeFileSync(path, code);
+  console.log('Fixed Dice3D to use black pips');
 }
