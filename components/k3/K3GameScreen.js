@@ -25,7 +25,7 @@ import { usePlatformStatus } from "@/components/platform/PlatformStatusProvider"
 import BrandLogo from "@/components/brand/BrandLogo";
 import OutcomePopup from "../games/OutcomePopup";
 import { Odometer } from "@/components/Odometer";
-import Dice3D from "@/components/k3/Dice3D";
+import DicePNG from "@/components/k3/DicePNG";
 import HowToPlayModal from "@/components/games/HowToPlayModal";
 import { Clock, HelpCircle } from "lucide-react";
 import { GameHeader } from "@/components/games/GameHeader";
@@ -988,7 +988,7 @@ export default function K3GameScreen({ initialPeriod = null, initialResults = []
           <div className="k3-dice-slots-container">
             {diceAnim.map((die, i) => (
               <div key={i} className="k3-dice-slot">
-                <Dice3D value={die} rolling={isRolling} index={i} />
+                <DicePNG value={die} rolling={isRolling} />
               </div>
             ))}
           </div>
