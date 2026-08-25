@@ -25,7 +25,7 @@
   will-change: transform;
   /* Ray-traced-style soft contact shadow so the die reads as a solid object
      resting in its slot rather than a flat sticker. */
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
+  
 }
 
 .k3d-die--rolling {

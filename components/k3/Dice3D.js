@@ -23,7 +23,7 @@ function Face({ value, variant }) {
   return (
     <div className={`k3d-face k3d-face--${variant}`}>
       {Array.from({ length: 9 }).map((_, i) => (
-        <span key={i} className={pips.includes(i) ? "k3d-pip-black" : "k3d-pip-empty"} />
+        <span key={i} className={pips.includes(i) ? "k3d-pip k3d-pip-black" : "k3d-pip-empty"} />
       ))}
     </div>
   );
@@ -41,7 +41,7 @@ export default function Dice3D({ value = 1, rolling = false, index = 0 }) {
     3: `rotateX(0deg) rotateY(-90deg)`,
     4: `rotateX(0deg) rotateY(90deg)`
   };
-  const rollClass = rolling ? `rolling-3d-${index}` : "";
+  const rollClass = rolling ? "k3d-die--rolling" : "";
   const finalTransform = `${baseTransform} ${rotFor[value] || rotFor[1]}`;
 
   return (
