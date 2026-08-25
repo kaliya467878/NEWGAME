@@ -448,3 +448,48 @@
   0%, 100% { transform: scale(1); filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05)); }
   50% { transform: scale(1.05); filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05)); }
 }
+
+
+/* ==========================================================
+   5D PREMIUM LIGHT THEME (WINGO-STYLE)
+========================================================== */
+.fived-layout {
+    background: #F4F7F9 !important;
+}
+
+.fived-layout::before {
+    display: none !important;
+}
+
+/* 5D Ticket/Timer Box */
+.fived-timer-box, .card-surface {
+    background: #FFFFFF !important;
+    border-radius: 16px !important;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.04) !important;
+    border: none !important;
+}
+
+.fived-panel {
+    background: #FFFFFF !important;
+    border-radius: 16px !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.04) !important;
+    border: none !important;
+}
+
+.fived-text {
+    color: #1e293b !important;
+}
+.fived-text-muted {
+    color: #64748b !important;
+}
+
+.fived-button {
+    background: #F1F5F9 !important;
+    color: #3b82f6 !important;
+    border: 1px solid #e2e8f0 !important;
+}
+.fived-button.active {
+    background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%) !important;
+    color: white !important;
+    border: none !important;
+}
