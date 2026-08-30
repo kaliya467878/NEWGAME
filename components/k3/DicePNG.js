@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import Image from "next/image";
 
 export default function DicePNG({ value = 1, rolling = false }) {
   const [currentFace, setCurrentFace] = useState(value);
@@ -17,17 +16,11 @@ export default function DicePNG({ value = 1, rolling = false }) {
     return () => clearInterval(id);
   }, [rolling, value]);
 
-  // Use the exact PNGs from Tiranga source
   return (
-    <div className="dice-png-container">
-      <Image 
-        src={`/k3-dice/${currentFace}.png`} 
-        alt={`Die ${currentFace}`} 
-        width={72} 
-        height={72} 
-        className="dice-png-img"
-        priority
-      />
+    <div className="slot-column">
+      <div className="slot-transform">
+        <div className={`slot-num bg${currentFace}`}></div>
+      </div>
     </div>
   );
 }

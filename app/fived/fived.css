@@ -40,204 +40,114 @@
 /* =========================================
    5D — REAL 3D DICE STAGE
    ========================================= */
-.k5-dice-stage {
-  position: relative;
-  height: 100px;
-  background: var(--theme-bg-card);
-  border: 1px solid var(--theme-green); /* gold border */
-  border-radius: 18px;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  padding: 0 12px;
-  perspective: 1000px;
-}
-
-.k5-dice-slots-container {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  justify-content: center;
-  width: 82%;
-  height: 85%;
-}
-
-.k5-dice-slot {
-  background: var(--theme-bg-card);
-  border-radius: 12px;
-  flex: 1;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
-  border: 1px solid var(--theme-border);
-}
-
-.k5-dice-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: #d4af37; /* gold */
-  width: 20px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 5;
-  cursor: pointer;
-}
-.k5-dice-arrow.left {
-  left: -1px;
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
-}
-.k5-dice-arrow.left::after {
-  content: "";
-  width: 0;
-  height: 0;
-  border-top: 5px solid transparent;
-  border-bottom: 5px solid transparent;
-  border-left: 7px solid var(--theme-text); /* points right */
-}
-.k5-dice-arrow.right {
-  right: -1px;
-  border-top-left-radius: 6px;
-  border-bottom-left-radius: 6px;
-}
-.k5-dice-arrow.right::after {
-  content: "";
-  width: 0;
-  height: 0;
-  border-top: 5px solid transparent;
-  border-bottom: 5px solid transparent;
-  border-right: 7px solid var(--theme-text); /* points left */
-}
-
-/* Override face to display centered digits instead of grid pips */
-.k5d-face {
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
-  font-family: inherit;
-  padding: 0 !important;
-}
-
-/* smaller responsive dice size for 5D (since there are 5 of them) */
-.k5-dice-stage .k3d-scene {
-  --die: 44px;
-  --half: 22px;
-  width: var(--die);
-  height: var(--die);
-}
-.k5-dice-stage .k3d-face {
-  border-radius: 10px;
-}
-@media (min-width: 375px) {
-  .k5-dice-stage .k3d-scene {
-    --die: 48px;
-    --half: 24px;
-  }
-}
-@media (min-width: 420px) {
-  .k5-dice-stage .k3d-scene {
-    --die: 52px;
-    --half: 26px;
-  }
-}
-
 /* =========================================
-   5D CYLINDRICAL SLOT DRUM REELS
+   5D — ORIGINAL TIRANGA SLOT STAGE & ANIMATIONS
    ========================================= */
-:root {
-  --reel-item-height: 54px;
+
+.slot-inner {
+  display: block;
+  height: 116px;
+  width: 100%;
+  margin-top: 18px;
+  background: #61a9ff;
+  border-radius: 7px;
+  position: relative;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
-.k5-reel-container {
+.d5-slot-box {
+  background: #ffffff;
+  border-radius: 5px;
+  height: 100%;
+  width: 100%;
   position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.slot-column {
+  display: inline-block;
+  width: 58px;
+  height: 85px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #333;
+  margin-right: 4px;
+  vertical-align: bottom;
+  position: relative;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.slot-column:last-child {
+  margin-right: 0;
+}
+
+.slot-column:before {
+  box-shadow: inset 0 -7px 4px 0 rgba(0,0,0,.3), inset 0 7px 4px 0 rgba(0,0,0,.3);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden;
-  border-radius: 8px;
-}
-
-.k5-reel-overlay-top,
-.k5-reel-overlay-bottom {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 18px;
-  z-index: 5;
+  content: "";
+  z-index: 2;
   pointer-events: none;
 }
 
-.k5-reel-overlay-top {
-  top: 0;
-  background: linear-gradient(to bottom, rgba(13, 13, 13, 0.95), transparent);
-}
-
-.k5-reel-overlay-bottom {
-  bottom: 0;
-  background: linear-gradient(to top, rgba(13, 13, 13, 0.95), transparent);
-}
-
-.k5-reel-strip {
-  position: absolute;
-  top: 50%;
-  margin-top: calc(-0.5 * var(--reel-item-height));
-  left: 0;
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.6s cubic-bezier(0.25, 1.2, 0.5, 1);
+.slot-column .slot-transform {
+  transform: translateY(-108px);
   will-change: transform;
 }
 
-.k5-reel-strip--rolling {
-  animation: k5-spin-reel 0.22s linear infinite;
+.slot-column .slot-transform.transform0 .slot-num {
+  background: linear-gradient(180deg, #59b0ea 0%, #61a9ff 100%);
+  color: #ffffff;
 }
 
-.k5-reel-item {
-  height: var(--reel-item-height);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+.slot-column .slot-transform.slot-scroll {
+  animation: slotScroll 3s cubic-bezier(.65, .02, .65, 1.06) forwards;
 }
 
-.k5-reel-circle {
-  width: 34px;
-  height: 34px;
+.slot-column .slot-transform.slot-scroll.transform1 {
+  animation-delay: .12s;
+}
+
+.slot-column .slot-transform.slot-scroll.transform2 {
+  animation-delay: .24s;
+}
+
+.slot-column .slot-transform.slot-scroll.transform3 {
+  animation-delay: .36s;
+}
+
+.slot-column .slot-transform.slot-scroll.transform4 {
+  animation-delay: .48s;
+}
+
+.slot-column .slot-num {
+  width: 55px;
+  height: 55px;
+  line-height: 55px;
+  background: #A6A9AE;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.15rem;
-  font-weight: 800;
-  color: var(--theme-text);
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 30px;
+  color: #404040;
+  font-weight: 700;
+  margin: 0 auto 6.25px;
 }
 
-.k5-reel-circle--active {
-  background: var(--theme-green);
-  color: var(--theme-text);
-  box-shadow: 0 0 14px rgba(71, 129, 255, 0.2);
-  border: 1px solid var(--theme-border);
-  transform: scale(1.05);
-}
-
-.k5-reel-circle--inactive {
-  background: var(--theme-border);
-  border: 1px solid var(--theme-border);
-  color: #a1a1aa;
-}
-
-@keyframes k5-spin-reel {
+@keyframes slotScroll {
   0% {
-    transform: translateY(calc(-10 * var(--reel-item-height)));
+    transform: translateY(-108px);
   }
   100% {
-    transform: translateY(0);
+    transform: translateY(-2279px);
   }
 }
 

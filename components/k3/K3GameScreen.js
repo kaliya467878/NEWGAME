@@ -982,17 +982,15 @@ export default function K3GameScreen({ initialPeriod = null, initialResults = []
           </div>
         </div>
 
-        {/* Dice Stage — clean 2D vector dice */}
-        <div className="k3-dice-stage">
-          <div className="k3-dice-arrow left"></div>
-          <div className="k3-dice-slots-container">
-            {diceAnim.map((die, i) => (
-              <div key={i} className="k3-dice-slot">
-                <DicePNG value={die} rolling={isRolling} />
-              </div>
-            ))}
+        {/* Dice Stage — exact Tiranga 3-dice spinning slot box */}
+        <div style={{ textAlign: "center" }} className="mb-4">
+          <div className="slot-inner">
+            <div className="d5-slot-box">
+              {diceAnim.map((die, i) => (
+                <DicePNG key={i} value={die} rolling={isRolling} />
+              ))}
+            </div>
           </div>
-          <div className="k3-dice-arrow right"></div>
         </div>
       </div>
       

@@ -270,7 +270,13 @@ export function GameBoard({ mode, modeLabel }: { mode: string; modeLabel: string
         (b.status === "PENDING" || b.status === "pending" || b.state === "pending") && !serverBetIds.has(b.id || b._id)
       );
       data.myBets = [...missingPendingBets, ...data.myBets];
-      localStorage.setItem(`fived_state_${mode}`, JSON.stringify(data));
+      if (typeof window !== "undefined") {
+        try {
+          localStorage.setItem(`fived_state_${mode}`, JSON.stringify(data));
+        } catch (e) {
+          console.error("Failed to write to localStorage:", e);
+        }
+      }
       return data;
     },
     refetchInterval: 2000,
@@ -508,28 +514,20 @@ export function GameBoard({ mode, modeLabel }: { mode: string; modeLabel: string
       />
 
       <section className="card-surface rounded-2xl p-5 sm:p-6 flex flex-col gap-3">
-        <div className="k5-dice-stage">
-          <div className="k5-dice-arrow left"></div>
-          <div className="k5-dice-slots-container">
+        <div className="slot-inner">
+          <div className="d5-slot-box">
             {reveal
               ? [reveal.a, reveal.b, reveal.c, reveal.d, reveal.e].map((d, i) => (
-                  <div key={i} className="k5-dice-slot">
-                    <FiveDReel index={i} value={d} rolling={isRolling} active={selectedPosition === POSITIONS[i]} />
-                  </div>
+                  <FiveDReel key={i} index={i} value={d} rolling={isRolling} active={selectedPosition === POSITIONS[i]} />
                 ))
               : recentResults[0]
               ? [recentResults[0].a, recentResults[0].b, recentResults[0].c, recentResults[0].d, recentResults[0].e].map((d, i) => (
-                  <div key={i} className="k5-dice-slot">
-                    <FiveDReel index={i} value={d} rolling={isRolling} active={selectedPosition === POSITIONS[i]} />
-                  </div>
+                  <FiveDReel key={i} index={i} value={d} rolling={isRolling} active={selectedPosition === POSITIONS[i]} />
                 ))
               : [0, 0, 0, 0, 0].map((d, i) => (
-                  <div key={i} className="k5-dice-slot">
-                    <FiveDReel index={i} value={d} rolling={isRolling} active={selectedPosition === POSITIONS[i]} />
-                  </div>
+                  <FiveDReel key={i} index={i} value={d} rolling={isRolling} active={selectedPosition === POSITIONS[i]} />
                 ))}
           </div>
-          <div className="k5-dice-arrow right"></div>
         </div>
         {recentResults[0] && (
           <p className="text-center text-xs text-muted mt-1">
