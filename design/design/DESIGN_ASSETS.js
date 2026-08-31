@@ -190,6 +190,17 @@ export const DESIGN_ASSETS = {
       comingSoon: false,
     },
     {
+      id: "trx_wingo",
+      label: "TRX WINGO",
+      href: "/wingo/trx_30s",
+      className: "wingo",
+      art: "🎱",
+      image: `${PUBLIC_BASE}/game-tiles/lottery_trx.jpg`,
+      sourceFile: null,
+      category: "lottery",
+      comingSoon: false,
+    },
+    {
       id: "aviator",
       label: "AVIATOR",
       className: "aviator",

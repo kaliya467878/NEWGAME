@@ -10,6 +10,10 @@ const DURATION_MAP: Record<string, WingoMode> = {
   "1m": "M1",
   "3m": "M3",
   "5m": "M5",
+  "trx_30s": "TRX_S30",
+  "trx_1m": "TRX_M1",
+  "trx_3m": "TRX_M3",
+  "trx_5m": "TRX_M5",
 };
 
 export async function GET(
@@ -24,7 +28,7 @@ export async function GET(
     }
 
     const { searchParams } = new URL(req.url);
-    const limit = Number(searchParams.get("limit") || 10);
+    const limit = Number(searchParams.get("limit") || 2000);
 
     // Only return current-epoch rounds. The DB still holds legacy rows from an
     // older date-based numbering scheme (e.g. 20260711103004929 — 17 digits)
@@ -58,6 +62,9 @@ export async function GET(
         resultNumber: p.number,
         colors: chips,
         size: p.size.toLowerCase(),
+        blockId: p.blockId,
+        blockNumber: p.blockNumber ? String(p.blockNumber) : null,
+        settledAt: p.settledAt.toISOString(),
       };
     });
 

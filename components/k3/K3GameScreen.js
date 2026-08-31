@@ -1024,7 +1024,7 @@ export default function K3GameScreen({ initialPeriod = null, initialResults = []
         </div>
 
         {historyTab === "game" && (() => {
-          const PAGE_SIZE = 5;
+          const PAGE_SIZE = 10;
           const gamePageCount = Math.max(1, Math.ceil(results.length / PAGE_SIZE));
           const activeGamePage = Math.min(gamePage, gamePageCount);
           const pagedGameResults = displayResults.slice((activeGamePage - 1) * PAGE_SIZE, activeGamePage * PAGE_SIZE);
@@ -1097,7 +1097,7 @@ export default function K3GameScreen({ initialPeriod = null, initialResults = []
         })()}
 
         {historyTab === "chart" && (() => {
-          const PAGE_SIZE = 5;
+          const PAGE_SIZE = 10;
           const chartPageCount = Math.max(1, Math.ceil(results.length / PAGE_SIZE));
           const activeChartPage = Math.min(chartPage, chartPageCount);
           const pagedChartResults = displayResults.slice((activeChartPage - 1) * PAGE_SIZE, activeChartPage * PAGE_SIZE);
@@ -1175,7 +1175,7 @@ export default function K3GameScreen({ initialPeriod = null, initialResults = []
         })()}
 
         {historyTab === "my" && (() => {
-          const PAGE_SIZE = 5;
+          const PAGE_SIZE = 10;
           const myPageCount = Math.max(1, Math.ceil(myBets.length / PAGE_SIZE));
           const activeMyPage = Math.min(myPage, myPageCount);
           const pagedMyBets = myBets.slice((activeMyPage - 1) * PAGE_SIZE, activeMyPage * PAGE_SIZE);

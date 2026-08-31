@@ -43,6 +43,10 @@ enum WingoMode {
   M1
   M3
   M5
+  TRX_S30
+  TRX_M1
+  TRX_M3
+  TRX_M5
 }
 
 enum WingoBetType {
@@ -424,6 +428,8 @@ model WingoResult {
   color       String
   size        String
   source      ResultSource
+  blockId     String?
+  blockNumber BigInt?
   settledAt   DateTime     @default(now())
 
   @@unique([mode, roundNumber])

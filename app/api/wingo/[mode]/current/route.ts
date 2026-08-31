@@ -10,9 +10,13 @@ const DURATION_MAP: Record<string, WingoMode> = {
   "1m": "M1",
   "3m": "M3",
   "5m": "M5",
+  "trx_30s": "TRX_S30",
+  "trx_1m": "TRX_M1",
+  "trx_3m": "TRX_M3",
+  "trx_5m": "TRX_M5",
 };
 
-const ALL_MODES: WingoMode[] = ["S30", "M1", "M3", "M5"];
+const ALL_MODES: WingoMode[] = ["S30", "M1", "M3", "M5", "TRX_S30", "TRX_M1", "TRX_M3", "TRX_M5"];
 
 // Keeps every duration settled, not just the one being viewed — a single
 // active user's poll on any Wingo tab now also drains the others in the

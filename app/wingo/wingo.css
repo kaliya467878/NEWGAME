@@ -1789,3 +1789,12 @@
     margin: 16px !important;
     box-shadow: 0 8px 24px rgba(0,0,0,0.04) !important;
 }
+
+.wg-ticket.trx-theme {
+    background: #10b981 !important;
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.2) !important;
+}
+.wg-ticket.trx-theme::before,
+.wg-ticket.trx-theme::after {
+    background: #F4F7F9 !important;
+}

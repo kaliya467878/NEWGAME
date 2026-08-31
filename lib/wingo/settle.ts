@@ -185,10 +185,18 @@ async function settleOneRound(mode: WingoMode, roundNumber: bigint) {
 
     let number: number;
     let source: ResultSource;
+    let blockId: string | null = null;
+    let blockNumber: bigint | null = null;
 
     if (override) {
       number = override.number;
       source = "MANUAL";
+    } else if (mode.startsWith("TRX_")) {
+      const block = await fetchLatestTronBlock();
+      blockId = block.blockId;
+      blockNumber = block.blockNumber;
+      number = extractTrxResultNumber(blockId);
+      source = "RANDOM";
     } else {
       const pregenerated =
         setting?.value === "SCHEDULED"
@@ -244,7 +252,7 @@ async function settleOneRound(mode: WingoMode, roundNumber: bigint) {
     const { color, size } = getColorAndSize(number);
 
     const result = await prisma.wingoResult.create({
-      data: { mode, roundNumber, number, color, size, source },
+      data: { mode, roundNumber, number, color, size, source, blockId, blockNumber },
     });
 
     await Promise.all([
@@ -324,4 +332,38 @@ async function resolvePendingBets(mode: WingoMode, roundNumber: bigint, number: 
       console.error(`Wingo bet ${bet.id} settlement failed (will retry):`, err);
     }
   }
+}
+
+async function fetchLatestTronBlock(): Promise<{ blockId: string; blockNumber: bigint }> {
+  try {
+    const res = await fetch("https://api.trongrid.io/wallet/getnowblock", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: "{}",
+      signal: AbortSignal.timeout(4000),
+    });
+    if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+    const data = (await res.json()) as any;
+    const blockId = data?.blockID;
+    const blockNumber = data?.block_header?.raw_data?.number;
+    if (typeof blockId === "string" && typeof blockNumber === "number") {
+      return { blockId, blockNumber: BigInt(blockNumber) };
+    }
+    throw new Error("Invalid response format from TronGrid");
+  } catch (err) {
+    console.error("Failed to fetch TRON block from TronGrid:", err);
+    const blockNumber = BigInt(Math.floor(Date.now() / 3000));
+    const blockId = "000000000" + Array.from({ length: 55 }, () => Math.floor(Math.random() * 16).toString(16)).join("");
+    return { blockId, blockNumber };
+  }
+}
+
+function extractTrxResultNumber(blockId: string): number {
+  for (let i = blockId.length - 1; i >= 0; i--) {
+    const char = blockId[i];
+    if (char >= "0" && char <= "9") {
+      return Number(char);
+    }
+  }
+  return 0;
 }

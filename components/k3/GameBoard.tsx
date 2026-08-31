@@ -59,7 +59,7 @@ const SUM_MULTIPLIERS: Record<number, number> = {
   10: 24, 11: 24,
 };
 
-const HISTORY_PAGE_SIZE = 5;
+const HISTORY_PAGE_SIZE = 10;
 
 const DOT_POSITIONS: Record<number, string[]> = {
   1: ["c"],

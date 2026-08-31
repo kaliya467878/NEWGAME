@@ -47,7 +47,7 @@ type StateDto = {
 };
 
 const NUMBERS = Array.from({ length: 10 }, (_, i) => i);
-const HISTORY_PAGE_SIZE = 5;
+const HISTORY_PAGE_SIZE = 10;
 
 async function fetchState(mode: string): Promise<StateDto> {
   const res = await fetch(`/api/wingo/${mode}/state`, { cache: "no-store" });

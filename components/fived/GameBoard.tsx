@@ -21,7 +21,7 @@ import { getSocket } from "@/lib/socket";
 
 const POSITIONS = ["A", "B", "C", "D", "E"] as const;
 const DIGITS = Array.from({ length: 10 }, (_, i) => i);
-const HISTORY_PAGE_SIZE = 5;
+const HISTORY_PAGE_SIZE = 10;
 const SELECTOR_TABS = [...POSITIONS, "SUM"] as const;
 type SelectorTab = (typeof SELECTOR_TABS)[number];
 

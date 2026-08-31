@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
 import { getGameTile } from "@/lib/designAssets";
 import ComingSoonModal from "./ComingSoonModal";
-import { CircleDashed, Dices, Ticket, Gem, Rocket, Swords, Clock, Hourglass, Zap, Crown } from "lucide-react";
+import { CircleDashed, Dices, Ticket, Gem, Rocket, Swords, Clock, Hourglass, Zap, Crown, Cpu } from "lucide-react";
 import { filterGames } from "@/lib/gameCatalog";
 
 const GAMES = {
@@ -202,6 +202,11 @@ const TILE_IMAGE_IDS = {
   wingo3m: "wingo",
   wingo5m: "wingo",
   wingo30: "wingo",
+  trx_wingo: "trx_wingo",
+  trx_wingo_30s: "trx_wingo",
+  trx_wingo_1m: "trx_wingo",
+  trx_wingo_3m: "trx_wingo",
+  trx_wingo_5m: "trx_wingo",
   aviator: "aviator",
   cricket: "cricket",
   mines: "mines",
@@ -280,6 +285,7 @@ function PopularGameCard({ game, onComingSoon }) {
 }
 
 const LOBBY_SECTIONS = [
+  { key: "trx", label: "TRX Wingo" },
   { key: "wingo", label: "Wingo Games" },
   { key: "k3", label: "K3 Games" },
   { key: "fived", label: "5D Games" },
@@ -293,6 +299,10 @@ const GAME_BANNER_MAP = {
   wingo_1m: "/design/game-tiles/wingo.png?v=3",
   wingo_3m: "/design/game-tiles/wingo.png?v=3",
   wingo_5m: "/design/game-tiles/wingo.png?v=3",
+  trx_wingo_30s: "/design/game-tiles/lottery_trx.jpg",
+  trx_wingo_1m: "/design/game-tiles/lottery_trx.jpg",
+  trx_wingo_3m: "/design/game-tiles/lottery_trx.jpg",
+  trx_wingo_5m: "/design/game-tiles/lottery_trx.jpg",
   k3_1m: "/design/game-tiles/k3_gold.jpg?v=3",
   k3_3m: "/design/game-tiles/k3_gold.jpg?v=3",
   k3_5m: "/design/game-tiles/k3_gold.jpg?v=3",
@@ -311,6 +321,7 @@ const GAME_BANNER_MAP = {
   cricket: "/design/game-tiles/cricket.jpg" };
 
 const CATEGORY_ICONS = {
+  trx: Cpu,
   wingo: CircleDashed,
   k3: Dices,
   fived: Ticket,
@@ -336,6 +347,7 @@ const COMING_SOON_GAMES = {
 const getCategoryLabel = (cat) => {
   if (!cat) return "Lottery";
   const lower = cat.toLowerCase();
+  if (lower === "trx") return "TRX Wingo";
   if (lower === "wingo") return "Wingo";
   if (lower === "k3") return "K3";
   if (lower === "fived" || lower === "5d") return "5D";
@@ -473,6 +485,7 @@ export default function GameGrid({ category }) {
     sectionsToShow = LOBBY_SECTIONS;
   } else if (category === "lottery") {
     sectionsToShow = [
+      { key: "trx", label: "TRX Wingo" },
       { key: "wingo", label: "Wingo Games" },
       { key: "k3", label: "K3 Games" },
       { key: "fived", label: "5D Games" },

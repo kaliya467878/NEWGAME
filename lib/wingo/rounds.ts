@@ -5,6 +5,10 @@ export const MODE_DURATIONS_SECONDS: Record<WingoMode, number> = {
   M1: 60,
   M3: 180,
   M5: 300,
+  TRX_S30: 30,
+  TRX_M1: 60,
+  TRX_M3: 180,
+  TRX_M5: 300,
 };
 
 export const LOCK_SECONDS = 5;
@@ -25,6 +29,10 @@ function getModeCode(mode: string): string {
   if (mode === "M1") return "01";
   if (mode === "M3") return "03";
   if (mode === "M5") return "05";
+  if (mode === "TRX_S30") return "130";
+  if (mode === "TRX_M1") return "101";
+  if (mode === "TRX_M3") return "103";
+  if (mode === "TRX_M5") return "105";
   return "00";
 }
 
@@ -34,27 +42,50 @@ function getModeCode(mode: string): string {
 // round identity (skipped/duplicate rounds, wrong countdown). BigInt keeps
 // this exact; only the small, safely-sized millisecond timestamps derived
 // from it stay as `number`.
+function getDeterministic9Digits(game: string, mode: string): number {
+  const input = `${game}_${mode}_salt_v2`;
+  let hash = 0;
+  for (let i = 0; i < input.length; i++) {
+    hash = (hash * 33 + input.charCodeAt(i)) & 0xffffffff;
+  }
+  return 100000000 + Math.abs(hash) % 900000000;
+}
+
 export function getStartRoundNumber(mode: WingoMode): bigint {
-  const modeCode = getModeCode(mode);
-  return BigInt(`202611100${modeCode}00001`);
+  const rand9 = getDeterministic9Digits("wingo", mode);
+  return BigInt(`20260711${rand9}`);
 }
 
 export function getRoundNumber(mode: WingoMode, atMs: number = Date.now()): bigint {
   const durationMs = MODE_DURATIONS_SECONDS[mode] * 1000;
-  const rawRound = Math.floor(atMs / durationMs);
-  const rawRoundAtT0 = Math.floor(T_0 / durationMs);
-  const diff = rawRound - rawRoundAtT0;
-  const startRound = getStartRoundNumber(mode);
-  return startRound + BigInt(diff);
+  const istMs = atMs + 5.5 * 60 * 60 * 1000;
+  const date = new Date(istMs);
+  const yyyy = date.getUTCFullYear();
+  const mm = String(date.getUTCMonth() + 1).padStart(2, "0");
+  const dd = String(date.getUTCDate()).padStart(2, "0");
+  const yyyymmdd = `${yyyy}${mm}${dd}`;
+
+  const startOfDayMs = Date.UTC(yyyy, date.getUTCMonth(), date.getUTCDate()) - 5.5 * 60 * 60 * 1000;
+  const diffToday = Math.floor((atMs - startOfDayMs) / durationMs);
+
+  const rand9 = getDeterministic9Digits("wingo", mode);
+  return BigInt(yyyymmdd + rand9) + BigInt(diffToday);
 }
 
 export function getRoundWindow(mode: WingoMode, roundNumber: bigint) {
   const durationMs = MODE_DURATIONS_SECONDS[mode] * 1000;
-  const startRound = getStartRoundNumber(mode);
-  const diff = Number(roundNumber - startRound);
-  const rawRoundAtT0 = Math.floor(T_0 / durationMs);
-  const rawRound = rawRoundAtT0 + diff;
-  const startsAt = rawRound * durationMs;
+  const roundStr = roundNumber.toString();
+  const yyyymmdd = roundStr.slice(0, 8);
+  const yyyy = Number(yyyymmdd.slice(0, 4));
+  const mm = Number(yyyymmdd.slice(4, 6)) - 1;
+  const dd = Number(yyyymmdd.slice(6, 8));
+
+  const startOfDayMs = Date.UTC(yyyy, mm, dd) - 5.5 * 60 * 60 * 1000;
+  const suffix = Number(roundStr.slice(8));
+  const rand9 = getDeterministic9Digits("wingo", mode);
+  const diffToday = suffix - rand9;
+
+  const startsAt = startOfDayMs + diffToday * durationMs;
   const endsAt = startsAt + durationMs;
   const locksAt = endsAt - LOCK_SECONDS * 1000;
   return { startsAt, endsAt, locksAt };

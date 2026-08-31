@@ -10,6 +10,10 @@ const MODE_DURATIONS: Record<string, number> = {
   M1: 60,
   M3: 180,
   M5: 300,
+  TRX_S30: 30,
+  TRX_M1: 60,
+  TRX_M3: 180,
+  TRX_M5: 300,
 };
 
 const REVERSE_DURATION_MAP: Record<string, string> = {
@@ -17,6 +21,10 @@ const REVERSE_DURATION_MAP: Record<string, string> = {
   M1: "1m",
   M3: "3m",
   M5: "5m",
+  TRX_S30: "trx_30s",
+  TRX_M1: "trx_1m",
+  TRX_M3: "trx_3m",
+  TRX_M5: "trx_5m",
 };
 
 export async function GET(req: NextRequest) {

@@ -51,7 +51,7 @@ async function getCachedRecentResults(mode: FiveDMode, currentRound: bigint): Pr
   const results = await prisma.fiveDResult.findMany({
     where: { mode, roundNumber: { lt: currentRound, gte: getStartRoundNumber(mode) } },
     orderBy: { roundNumber: "desc" },
-    take: 50,
+    take: 2000,
   });
   recentResultsCache[mode] = {
     data: results,

@@ -1,7 +1,8 @@
-export type GameCategoryKey = "popular" | "wingo" | "k3" | "fived" | "originals" | "slots" | "live" | "sports";
+export type GameCategoryKey = "popular" | "trx" | "wingo" | "k3" | "fived" | "originals" | "slots" | "live" | "sports";
 
 export const GAME_CATEGORIES: { key: GameCategoryKey; label: string }[] = [
   { key: "popular", label: "All Games" },
+  { key: "trx", label: "TRX Wingo" },
   { key: "wingo", label: "Wingo" },
   { key: "k3", label: "K3" },
   { key: "fived", label: "5D" },
@@ -23,6 +24,27 @@ export type GameCatalogEntry = {
 };
 
 export const GAMES: GameCatalogEntry[] = [
+  // TRX Wingo Family
+  {
+    slug: "trx_wingo_1m",
+    label: "TRX Wingo 1M",
+    description: "Tron block hash color prediction 1m",
+    href: "/trx/trx_1m",
+    category: "trx",
+    popular: true,
+    badge: "NEW",
+    emoji: "🔮",
+  },
+  {
+    slug: "trx_wingo_3m",
+    label: "TRX Wingo 3M",
+    description: "Tron block hash color prediction 3m",
+    href: "/trx/trx_3m",
+    category: "trx",
+    popular: true,
+    badge: "HOT",
+    emoji: "🔮",
+  },
   // Wingo Family
   {
     slug: "wingo_30s",

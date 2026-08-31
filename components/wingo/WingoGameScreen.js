@@ -33,12 +33,54 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { GameHeader } from "@/components/games/GameHeader";
 import { useToasts, ToastStack } from "@/components/ui/Toast";
 
+function formatTrxHash(hash) {
+  if (!hash) return null;
+  let numericIndex = -1;
+  for (let i = hash.length - 1; i >= 0; i--) {
+    const char = hash[i];
+    if (char >= "0" && char <= "9") {
+      numericIndex = i;
+      break;
+    }
+  }
+  if (numericIndex === -1) {
+    return { prefix: hash.slice(-5), digit: "", suffix: "" };
+  }
+  const prefix = hash.slice(-5, numericIndex - hash.length);
+  const digit = hash[numericIndex];
+  const suffix = hash.slice(numericIndex + 1);
+  return { prefix, digit, suffix };
+}
+
+function formatTrxPeriod(periodId) {
+  if (!periodId) return "—";
+  const str = String(periodId);
+  if (str.length < 7) return str;
+  return str.slice(0, 3) + "**" + str.slice(-4);
+}
+
+function formatBlockTime(settledAt) {
+  if (!settledAt) return "—";
+  const date = new Date(settledAt);
+  return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+}
+
+function formatTrxHashValue(hash) {
+  if (!hash) return "—";
+  return "**" + hash.slice(-4).toLowerCase();
+}
+
 
 export default function WingoGameScreen({ initialPeriod = null, initialResults = [] }) {
   const params = useParams();
   const router = useRouter();
   const duration = params.duration;
   const durationMeta = getDurationMeta(duration);
+  const isTrx = duration?.startsWith("trx_");
+  const activeDurations = isTrx 
+    ? DURATIONS.filter(d => d.isTrx && (d.slug === "trx_1m" || d.slug === "trx_3m")) 
+    : DURATIONS.filter(d => !d.isTrx);
+  const durationHrefPrefix = isTrx ? "/trx" : "/wingo";
   const { maintenanceMode, message: maintenanceMessage, blocksAction } = usePlatformStatus();
   const { toasts, push: pushToast } = useToasts();
 
@@ -233,7 +275,7 @@ export default function WingoGameScreen({ initialPeriod = null, initialResults =
     // to a warm balance/results paint, and public data still never blocks
     // on private data failing (e.g. an expired token throwing a 401
     // shouldn't wipe the game history off the screen too).
-    const publicFetch = Promise.all([getCurrentPeriod(duration), getRecentResults(duration, 50)]);
+    const publicFetch = Promise.all([getCurrentPeriod(duration), getRecentResults(duration, 2000)]);
     const privateFetch = getToken()
       ? Promise.all([getBalance(), getMyBets({ limit: 20, duration })])
       : null;
@@ -581,10 +623,10 @@ export default function WingoGameScreen({ initialPeriod = null, initialResults =
   return (
     <main className="wingo-game">
       <GameHeader
-        title="Win Go"
-        durations={DURATIONS.map(d => ({ id: d.slug, label: `Win Go ${d.label}` }))}
+        title={isTrx ? "TRX Win Go" : "Win Go"}
+        durations={activeDurations.map(d => ({ id: d.slug, label: isTrx ? `TRX Wingo ${d.label}` : `Win Go ${d.label}` }))}
         activeDuration={duration}
-        durationHrefPrefix="/wingo"
+        durationHrefPrefix={durationHrefPrefix}
       />
 
       {(maintenanceMode || blocksAction("bet")) && (
@@ -596,33 +638,142 @@ export default function WingoGameScreen({ initialPeriod = null, initialResults =
       {error && !betSheet && <div className="auth-error wg-msg">{error}</div>}
 
       {/* Ticket section */}
-      <section className="wg-ticket">
-        <div className="wg-ticket-left">
-          <button type="button" className="wg-how-play" onClick={openRules} style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
-            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
-              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-            </svg>
-            How to play
-          </button>
-          <p className="wg-mode-label">{durationMeta.short}</p>
-          <div className="wg-recent-row">
-            {results.slice(0, 5).map((r) => (
-              <span key={r.periodId} className={`wg-mini-ball ${colorClass(r.resultNumber)}`}>
-                {r.resultNumber}
+      <section className={`wg-ticket ${isTrx ? "trx-theme" : ""}`}>
+        {isTrx ? (
+          <div style={{ width: "100%", padding: "12px 16px", display: "flex", flexDirection: "column", gap: "10px" }}>
+            {/* Top row */}
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <div style={{ display: "flex", gap: "8px" }}>
+                <span style={{ background: "#10b981", color: "#fff", padding: "4px 10px", borderRadius: "9999px", fontSize: "0.75rem", fontWeight: "600" }}>
+                  Period
+                </span>
+                <button type="button" className="wg-how-play" onClick={openRules} style={{ display: "inline-flex", alignItems: "center", gap: "4px", background: "rgba(255,255,255,0.2)", color: "#fff", padding: "4px 10px", borderRadius: "9999px", fontSize: "0.75rem" }}>
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+                  </svg>
+                  How to play
+                </button>
+              </div>
+              <a 
+                href="https://tronscan.org" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "4px",
+                  background: "#fff",
+                  color: "#10b981",
+                  padding: "4px 12px",
+                  borderRadius: "9999px",
+                  fontSize: "0.75rem",
+                  fontWeight: "600",
+                  textDecoration: "none"
+                }}
+              >
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <circle cx="11" cy="11" r="8" />
+                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
+                Public Chain Query
+              </a>
+            </div>
+
+            {/* Middle row */}
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", color: "#fff" }}>
+              <span style={{ fontSize: "1.1rem", fontWeight: "700", fontFamily: "monospace" }}>
+                {period?.periodId || "—"}
               </span>
-            ))}
+              <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                <span style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.8)" }}>Draw time</span>
+                <div style={{ display: "flex", gap: "3px" }}>
+                  <span style={{ background: "#fff", color: "#10b981", padding: "2px 6px", borderRadius: "4px", fontWeight: "bold", fontSize: "0.85rem" }}>{timer.mm[0]}</span>
+                  <span style={{ background: "#fff", color: "#10b981", padding: "2px 6px", borderRadius: "4px", fontWeight: "bold", fontSize: "0.85rem" }}>{timer.mm[1]}</span>
+                  <span style={{ fontWeight: "bold", fontSize: "0.85rem" }}>:</span>
+                  <span style={{ background: "#fff", color: "#10b981", padding: "2px 6px", borderRadius: "4px", fontWeight: "bold", fontSize: "0.85rem" }}>{timer.ss[0]}</span>
+                  <span style={{ background: "#fff", color: "#10b981", padding: "2px 6px", borderRadius: "4px", fontWeight: "bold", fontSize: "0.85rem" }}>{timer.ss[1]}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Dashed line */}
+            <div style={{ borderTop: "1px dashed rgba(255,255,255,0.4)", margin: "4px 0" }} />
+
+            {/* Bottom row (five hash characters) */}
+            <div style={{ display: "flex", justifyContent: "space-around", padding: "4px 0" }}>
+              {(() => {
+                const latestResult = results[0];
+                const blockId = latestResult?.blockId || "00000";
+                const last5 = blockId.slice(-5).toUpperCase();
+                
+                let firstNumIndexRight = -1;
+                for (let i = last5.length - 1; i >= 0; i--) {
+                  const char = last5[i];
+                  if (char >= "0" && char <= "9") {
+                    firstNumIndexRight = i;
+                    break;
+                  }
+                }
+
+                return last5.split("").map((char, index) => {
+                  const isWinningDigit = index === firstNumIndexRight;
+                  return (
+                    <span 
+                      key={index} 
+                      className="wg-trx-ball"
+                      style={{
+                        width: "44px",
+                        height: "44px",
+                        borderRadius: "50%",
+                        background: "radial-gradient(circle, #ff6b6b 0%, #e63946 100%)",
+                        color: isWinningDigit ? "#fbbf24" : "#fff",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: "1.3rem",
+                        fontWeight: "800",
+                        boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
+                        border: "2px solid rgba(255,255,255,0.3)"
+                      }}
+                    >
+                      {char}
+                    </span>
+                  );
+                });
+              })()}
+            </div>
           </div>
-        </div>
-        <div className="wg-ticket-right">
-          <span className="wg-time-label">Time remaining</span>
-          <div className="wg-timer">
-            <span>{timer.mm}</span>
-            <em>:</em>
-            <span>{timer.ss}</span>
-          </div>
-          <p className="wg-period-id">{period?.periodId || "—"}</p>
-        </div>
+        ) : (
+          <>
+            <div className="wg-ticket-left">
+              <button type="button" className="wg-how-play" onClick={openRules} style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+                </svg>
+                How to play
+              </button>
+              <p className="wg-mode-label">{durationMeta.short}</p>
+              <div className="wg-recent-row">
+                {results.slice(0, 5).map((r) => (
+                  <span key={r.periodId} className={`wg-mini-ball ${colorClass(r.resultNumber)}`}>
+                    {r.resultNumber}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div className="wg-ticket-right">
+              <span className="wg-time-label">Time remaining</span>
+              <div className="wg-timer">
+                <span>{timer.mm}</span>
+                <em>:</em>
+                <span>{timer.ss}</span>
+              </div>
+              <p className="wg-period-id">{period?.periodId || "—"}</p>
+            </div>
+          </>
+        )}
       </section>
 
       <section className="wg-bet-zone">
@@ -708,39 +859,104 @@ export default function WingoGameScreen({ initialPeriod = null, initialResults =
           <>
             <table className="wg-table">
               <thead>
-                <tr>
-                  <th>Period</th>
-                  <th>Number</th>
-                  <th>Big/Small</th>
-                  <th>Color</th>
-                </tr>
+                {isTrx ? (
+                  <tr>
+                    <th>Period</th>
+                    <th>Block height</th>
+                    <th>Block time</th>
+                    <th>Hash value</th>
+                    <th>Result</th>
+                  </tr>
+                ) : (
+                  <tr>
+                    <th>Period</th>
+                    <th>Number</th>
+                    <th>Big/Small</th>
+                    <th>Color</th>
+                  </tr>
+                )}
               </thead>
               <tbody>
                 {results.length === 0 ? (
                   <tr>
-                    <td colSpan={4} style={{ textAlign: "center", padding: "20px", color: "#888" }}>
+                    <td colSpan={isTrx ? 5 : 4} style={{ textAlign: "center", padding: "20px", color: "#888" }}>
                       No data available
                     </td>
                   </tr>
                 ) : (
                   displayResults
                     .slice((Math.min(gameHistoryPage, gameHistoryPageCount) - 1) * 10, Math.min(gameHistoryPage, gameHistoryPageCount) * 10)
-                    .map((r) => (
-                      <tr key={r.periodId}>
-                        <td className="wg-period-cell">{r.displayPeriodId?.slice(-8)}</td>
-                        <td>
-                          <span className={`wg-table-num ${colorClass(r.resultNumber)}`}>{r.resultNumber}</span>
-                        </td>
-                        <td>{getSize(r.resultNumber)}</td>
-                        <td>
-                          <div className="wg-color-dots">
-                            {getColorDots(r.resultNumber).map((c) => (
-                              <span key={c} className={`wg-dot ${c}`} />
-                            ))}
-                          </div>
-                        </td>
-                      </tr>
-                    ))
+                    .map((r) => {
+                      if (isTrx) {
+                        return (
+                          <tr key={r.periodId}>
+                            <td className="wg-period-cell">{formatTrxPeriod(r.displayPeriodId)}</td>
+                            <td style={{ fontSize: "0.85rem", fontWeight: "600", position: "relative" }}>
+                              <a
+                                href={`https://tronscan.org/#/block/${r.blockNumber}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{ color: "#374151", textDecoration: "none" }}
+                              >
+                                {r.blockNumber ? String(r.blockNumber) : "—"}
+                              </a>
+                              <span style={{
+                                display: "inline-flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                width: "12px",
+                                height: "12px",
+                                borderRadius: "50%",
+                                background: "#ff6b6b",
+                                color: "#fff",
+                                fontSize: "8px",
+                                position: "relative",
+                                top: "-6px",
+                                left: "2px",
+                                cursor: "pointer"
+                              }} title="Click to verify block on TronScan">?</span>
+                            </td>
+                            <td style={{ fontSize: "0.85rem", color: "#374151" }}>
+                              {formatBlockTime(r.settledAt)}
+                            </td>
+                            <td style={{ fontFamily: "monospace", fontSize: "0.85rem", color: "#374151" }}>
+                              {formatTrxHashValue(r.blockId)}
+                            </td>
+                            <td>
+                              <div style={{ display: "flex", gap: "8px", alignItems: "center", justifyContent: "center" }}>
+                                <span className={`wg-table-num ${colorClass(r.resultNumber)}`} style={{ margin: 0 }}>
+                                  {r.resultNumber}
+                                </span>
+                                <span style={{
+                                  fontWeight: "800",
+                                  fontSize: "0.9rem",
+                                  color: getSize(r.resultNumber) === "Big" ? "#f59e0b" : "#3b82f6"
+                                }}>
+                                  {getSize(r.resultNumber) === "Big" ? "B" : "S"}
+                                </span>
+                              </div>
+                            </td>
+                          </tr>
+                        );
+                      }
+
+                      return (
+                        <tr key={r.periodId}>
+                          <td className="wg-period-cell">{r.displayPeriodId?.slice(-8)}</td>
+                          <td>
+                            <span className={`wg-table-num ${colorClass(r.resultNumber)}`}>{r.resultNumber}</span>
+                          </td>
+                          <td>{getSize(r.resultNumber)}</td>
+                          <td>
+                            <div className="wg-color-dots">
+                              {getColorDots(r.resultNumber).map((c) => (
+                                <span key={c} className={`wg-dot ${c}`} />
+                              ))}
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })
                 )}
               </tbody>
             </table>

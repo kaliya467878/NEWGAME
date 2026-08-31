@@ -36,7 +36,7 @@ async function getCachedRecentResults(mode: K3Mode, currentRound: bigint): Promi
   const results = await prisma.k3Result.findMany({
     where: { mode, roundNumber: { lt: currentRound } },
     orderBy: { roundNumber: "desc" },
-    take: 50,
+    take: 2000,
   });
   recentResultsCache[mode] = {
     data: results,

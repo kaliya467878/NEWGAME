@@ -18,6 +18,10 @@ const MODE_MAP: Record<string, WingoMode> = {
   "1min": "M1",
   "3min": "M3",
   "5min": "M5",
+  "trx_30s": "TRX_S30",
+  "trx_1m": "TRX_M1",
+  "trx_3m": "TRX_M3",
+  "trx_5m": "TRX_M5",
 };
 
 // Global cache for recent wingo results to prevent database read spikes under high traffic
@@ -33,7 +37,7 @@ async function getCachedRecentResults(mode: WingoMode): Promise<any[]> {
   const results = await prisma.wingoResult.findMany({
     where: { mode },
     orderBy: { roundNumber: "desc" },
-    take: 50,
+    take: 2000,
   });
   recentResultsCache[mode] = {
     data: results,
