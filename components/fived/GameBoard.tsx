@@ -515,7 +515,7 @@ export function GameBoard({ mode, modeLabel }: { mode: string; modeLabel: string
 
       <section className="card-surface rounded-2xl p-5 sm:p-6 flex flex-col gap-3">
         <div className="slot-inner">
-          <div className="d5-slot-box">
+          <div className="d5-slot-box fived-slot-box">
             {reveal
               ? [reveal.a, reveal.b, reveal.c, reveal.d, reveal.e].map((d, i) => (
                   <FiveDReel key={i} index={i} value={d} rolling={isRolling} active={selectedPosition === POSITIONS[i]} />

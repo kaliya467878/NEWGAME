@@ -1452,6 +1452,7 @@ body {
     border-radius: 7px;
     position: relative;
     padding: 10px;
+    min-width: 340px !important;
 }
 .slot-inner:before {
     left: -5px;

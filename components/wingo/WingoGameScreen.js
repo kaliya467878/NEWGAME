@@ -62,7 +62,9 @@ function formatTrxPeriod(periodId) {
 function formatBlockTime(settledAt) {
   if (!settledAt) return "—";
   const date = new Date(settledAt);
-  return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+  const hour = String(date.getHours()).padStart(2, "0");
+  const minute = String(date.getMinutes()).padStart(2, "0");
+  return `${hour}:${minute}:54`;
 }
 
 function formatTrxHashValue(hash) {
@@ -647,7 +649,7 @@ export default function WingoGameScreen({ initialPeriod = null, initialResults =
                 <span style={{ background: "#10b981", color: "#fff", padding: "4px 10px", borderRadius: "9999px", fontSize: "0.75rem", fontWeight: "600" }}>
                   Period
                 </span>
-                <button type="button" className="wg-how-play" onClick={openRules} style={{ display: "inline-flex", alignItems: "center", gap: "4px", background: "rgba(255,255,255,0.2)", color: "#fff", padding: "4px 10px", borderRadius: "9999px", fontSize: "0.75rem" }}>
+                <button type="button" className="wg-how-play" onClick={openRules} style={{ display: "inline-flex", alignItems: "center", gap: "4px", background: "#f3f4f6", color: "#374151", padding: "4px 10px", borderRadius: "9999px", fontSize: "0.75rem" }}>
                   <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
                     <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
                     <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
@@ -663,8 +665,8 @@ export default function WingoGameScreen({ initialPeriod = null, initialResults =
                   display: "inline-flex",
                   alignItems: "center",
                   gap: "4px",
-                  background: "#fff",
-                  color: "#10b981",
+                  background: "#10b981",
+                  color: "#fff",
                   padding: "4px 12px",
                   borderRadius: "9999px",
                   fontSize: "0.75rem",
@@ -681,24 +683,24 @@ export default function WingoGameScreen({ initialPeriod = null, initialResults =
             </div>
 
             {/* Middle row */}
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", color: "#fff" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", color: "#111827" }}>
               <span style={{ fontSize: "1.1rem", fontWeight: "700", fontFamily: "monospace" }}>
                 {period?.periodId || "—"}
               </span>
               <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                <span style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.8)" }}>Draw time</span>
+                <span style={{ fontSize: "0.8rem", color: "#6b7280" }}>Draw time</span>
                 <div style={{ display: "flex", gap: "3px" }}>
-                  <span style={{ background: "#fff", color: "#10b981", padding: "2px 6px", borderRadius: "4px", fontWeight: "bold", fontSize: "0.85rem" }}>{timer.mm[0]}</span>
-                  <span style={{ background: "#fff", color: "#10b981", padding: "2px 6px", borderRadius: "4px", fontWeight: "bold", fontSize: "0.85rem" }}>{timer.mm[1]}</span>
-                  <span style={{ fontWeight: "bold", fontSize: "0.85rem" }}>:</span>
-                  <span style={{ background: "#fff", color: "#10b981", padding: "2px 6px", borderRadius: "4px", fontWeight: "bold", fontSize: "0.85rem" }}>{timer.ss[0]}</span>
-                  <span style={{ background: "#fff", color: "#10b981", padding: "2px 6px", borderRadius: "4px", fontWeight: "bold", fontSize: "0.85rem" }}>{timer.ss[1]}</span>
+                  <span style={{ background: "#10b981", color: "#fff", padding: "2px 6px", borderRadius: "4px", fontWeight: "bold", fontSize: "0.85rem" }}>{timer.mm[0]}</span>
+                  <span style={{ background: "#10b981", color: "#fff", padding: "2px 6px", borderRadius: "4px", fontWeight: "bold", fontSize: "0.85rem" }}>{timer.mm[1]}</span>
+                  <span style={{ fontWeight: "bold", fontSize: "0.85rem", color: "#10b981" }}>:</span>
+                  <span style={{ background: "#10b981", color: "#fff", padding: "2px 6px", borderRadius: "4px", fontWeight: "bold", fontSize: "0.85rem" }}>{timer.ss[0]}</span>
+                  <span style={{ background: "#10b981", color: "#fff", padding: "2px 6px", borderRadius: "4px", fontWeight: "bold", fontSize: "0.85rem" }}>{timer.ss[1]}</span>
                 </div>
               </div>
             </div>
 
             {/* Dashed line */}
-            <div style={{ borderTop: "1px dashed rgba(255,255,255,0.4)", margin: "4px 0" }} />
+            <div style={{ borderTop: "1px dashed #e5e7eb", margin: "4px 0" }} />
 
             {/* Bottom row (five hash characters) */}
             <div style={{ display: "flex", justifyContent: "space-around", padding: "4px 0" }}>
@@ -733,6 +735,7 @@ export default function WingoGameScreen({ initialPeriod = null, initialResults =
                         justifyContent: "center",
                         fontSize: "1.3rem",
                         fontWeight: "800",
+                        fontFamily: "sans-serif",
                         boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
                         border: "2px solid rgba(255,255,255,0.3)"
                       }}
@@ -756,7 +759,7 @@ export default function WingoGameScreen({ initialPeriod = null, initialResults =
               </button>
               <p className="wg-mode-label">{durationMeta.short}</p>
               <div className="wg-recent-row">
-                {results.slice(0, 5).map((r) => (
+                {results.slice(0, 10).map((r) => (
                   <span key={r.periodId} className={`wg-mini-ball ${colorClass(r.resultNumber)}`}>
                     {r.resultNumber}
                   </span>
@@ -857,7 +860,7 @@ export default function WingoGameScreen({ initialPeriod = null, initialResults =
       <section className="wg-history-panel">
         {historyTab === "game" && (
           <>
-            <table className="wg-table">
+            <table className={`wg-table ${isTrx ? "wg-trx-table" : ""}`}>
               <thead>
                 {isTrx ? (
                   <tr>
@@ -891,7 +894,7 @@ export default function WingoGameScreen({ initialPeriod = null, initialResults =
                         return (
                           <tr key={r.periodId}>
                             <td className="wg-period-cell">{formatTrxPeriod(r.displayPeriodId)}</td>
-                            <td style={{ fontSize: "0.85rem", fontWeight: "600", position: "relative" }}>
+                            <td style={{ fontSize: "0.72rem", fontWeight: "600", position: "relative" }}>
                               <a
                                 href={`https://tronscan.org/#/block/${r.blockNumber}`}
                                 target="_blank"
@@ -916,10 +919,10 @@ export default function WingoGameScreen({ initialPeriod = null, initialResults =
                                 cursor: "pointer"
                               }} title="Click to verify block on TronScan">?</span>
                             </td>
-                            <td style={{ fontSize: "0.85rem", color: "#374151" }}>
+                            <td style={{ fontSize: "0.75rem", color: "#374151" }}>
                               {formatBlockTime(r.settledAt)}
                             </td>
-                            <td style={{ fontFamily: "monospace", fontSize: "0.85rem", color: "#374151" }}>
+                            <td style={{ fontFamily: "monospace", fontSize: "0.76rem", color: "#374151" }}>
                               {formatTrxHashValue(r.blockId)}
                             </td>
                             <td>

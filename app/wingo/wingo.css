@@ -400,11 +400,11 @@
   font-style: normal;
   color: rgba(71, 129, 255, 0.2);
   font-size: 1rem;
-  font-weight: 800;
+  padding: 0.25rem 0.5rem;
 }
 
 .wg-period-id {
-  font-size: 0.625rem;
+  font-size: 0.85rem !important;
   color: var(--theme-text-dim);
   font-weight: 700;
   font-family: monospace;
@@ -1791,10 +1791,16 @@
 }
 
 .wg-ticket.trx-theme {
-    background: #10b981 !important;
-    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.2) !important;
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04) !important;
 }
 .wg-ticket.trx-theme::before,
 .wg-ticket.trx-theme::after {
     background: #F4F7F9 !important;
+}
+
+.wg-trx-table th, .wg-trx-table td {
+    padding: 10px 4px !important;
+    text-align: center !important;
 }

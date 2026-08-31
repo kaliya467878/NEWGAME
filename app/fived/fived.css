@@ -359,4 +359,16 @@
   50% { transform: scale(1.05); filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05)); }
 }
 
+.fived-slot-box .slot-column .slot-num {
+  font-size: 30px !important;
+  color: #404040 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.fived-slot-box .slot-column .slot-transform.transform0 .slot-num {
+  color: #ffffff !important;
+}
+
 
