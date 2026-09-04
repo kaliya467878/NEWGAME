@@ -314,10 +314,14 @@ const GAME_BANNER_MAP = {
   crash: "/design/game-tiles/aviator.png?v=3",
   limbo: "/design/game-tiles/limbo_gold.jpg?v=3",
   mines: "/design/game-tiles/mines_gold.jpg?v=3",
-  dice: "/design/game-tiles/dice_gold.jpg?v=3",
-  evolution: "/design/game-tiles/evolution.png?v=3",
-  pg_slots: "/design/game-tiles/pg-slots.png?v=3",
-  jili_slots: "/design/game-tiles/jili-slots.jpg?v=3",
+  dragon_tiger: "/design/game-tiles/dragon-tiger.png",
+  blackjack: "/design/game-tiles/evolution.png?v=3",
+  roulette: "/design/game-tiles/evolution.png?v=3",
+  baccarat: "/design/game-tiles/evolution.png?v=3",
+  sicbo: "/design/game-tiles/k3_gold.jpg?v=3",
+  seven_up_down: "/design/game-tiles/dice_gold.jpg?v=3",
+  andar_bahar: "/design/game-tiles/fived_gold.jpg?v=3",
+  teen_patti: "/design/game-tiles/evolution.png?v=3",
   cricket: "/design/game-tiles/cricket.jpg" };
 
 const CATEGORY_ICONS = {

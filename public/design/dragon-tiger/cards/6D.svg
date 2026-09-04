@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="140" height="196" viewBox="0 0 140 196" role="img" aria-label="6 of diamonds">
+  <defs>
+    <linearGradient id="face" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f3f4f6"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  <rect x="2" y="2" width="136" height="192" rx="12" fill="url(#face)" stroke="#e5e7eb" stroke-width="2" filter="url(#shadow)"/>
+  <text x="14" y="34" font-family="Georgia, 'Times New Roman', serif" font-size="26" font-weight="700" fill="#dc2626">6</text>
+  <text x="14" y="58" font-family="Segoe UI Symbol, Apple Color Emoji, sans-serif" font-size="20" fill="#dc2626">♦</text>
+  <text x="70" y="118" text-anchor="middle" font-family="Segoe UI Symbol, Apple Color Emoji, sans-serif" font-size="56" fill="#dc2626">♦</text>
+  <g transform="translate(140,196) rotate(180)">
+    <text x="14" y="34" font-family="Georgia, 'Times New Roman', serif" font-size="26" font-weight="700" fill="#dc2626">6</text>
+    <text x="14" y="58" font-family="Segoe UI Symbol, Apple Color Emoji, sans-serif" font-size="20" fill="#dc2626">♦</text>
+  </g>
+</svg>

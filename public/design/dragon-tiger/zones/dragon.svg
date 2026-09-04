@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="220" viewBox="0 0 360 220">
+  <defs>
+    <linearGradient id="z" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1d4ed8" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#1d4ed8" stop-opacity="0.2"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="352" height="212" rx="18" fill="url(#z)" stroke="#38bdf8" stroke-width="4"/>
+  <text x="180" y="42" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-size="28" fill="#fff" letter-spacing="2">DRAGON</text>
+</svg>

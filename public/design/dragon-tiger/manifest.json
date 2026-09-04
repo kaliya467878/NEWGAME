@@ -1,0 +1,86 @@
+{
+  "basePath": "/design/dragon-tiger",
+  "art": {
+    "tile": "/design/dragon-tiger/tile.png",
+    "stageBg": "/design/dragon-tiger/stage-bg.png",
+    "dealer": "/design/dragon-tiger/dealer.png",
+    "dragonEmblem": "/design/dragon-tiger/dragon-emblem.png",
+    "tigerEmblem": "/design/dragon-tiger/tiger-emblem.png",
+    "tieEmblem": "/design/dragon-tiger/tie-emblem.png",
+    "tableRim": "/design/dragon-tiger/table-rim.png",
+    "cardBackPng": "/design/dragon-tiger/cards/back.png",
+    "cardBackSvg": "/design/dragon-tiger/cards/back.svg"
+  },
+  "chips": [
+    {
+      "value": 1,
+      "src": "/design/dragon-tiger/chips/chip-1.svg"
+    },
+    {
+      "value": 2,
+      "src": "/design/dragon-tiger/chips/chip-2.svg"
+    },
+    {
+      "value": 5,
+      "src": "/design/dragon-tiger/chips/chip-5.svg"
+    },
+    {
+      "value": 10,
+      "src": "/design/dragon-tiger/chips/chip-10.svg"
+    },
+    {
+      "value": 25,
+      "src": "/design/dragon-tiger/chips/chip-25.svg"
+    },
+    {
+      "value": 50,
+      "src": "/design/dragon-tiger/chips/chip-50.svg"
+    },
+    {
+      "value": 100,
+      "src": "/design/dragon-tiger/chips/chip-100.svg"
+    },
+    {
+      "value": 500,
+      "src": "/design/dragon-tiger/chips/chip-500.svg"
+    }
+  ],
+  "history": {
+    "dragon": "/design/dragon-tiger/history/d.svg",
+    "tiger": "/design/dragon-tiger/history/t.svg",
+    "tie": "/design/dragon-tiger/history/tie.svg"
+  },
+  "zones": {
+    "dragon": "/design/dragon-tiger/zones/dragon.svg",
+    "tiger": "/design/dragon-tiger/zones/tiger.svg",
+    "tie": "/design/dragon-tiger/zones/tie.svg"
+  },
+  "icons": {
+    "clock": "/design/dragon-tiger/icons/clock.svg",
+    "plus": "/design/dragon-tiger/icons/plus.svg",
+    "globe": "/design/dragon-tiger/icons/globe.svg",
+    "sound": "/design/dragon-tiger/icons/sound.svg"
+  },
+  "ranks": [
+    "A",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "J",
+    "Q",
+    "K"
+  ],
+  "suits": [
+    "S",
+    "H",
+    "D",
+    "C"
+  ],
+  "cardCount": 52
+}
